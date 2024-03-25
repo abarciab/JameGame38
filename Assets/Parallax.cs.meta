@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 17ea8450f988d4645ada76137a0d4316
+guid: 4ddc1fb36a24e014797f1c3eafb295fd
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _deflectSound: {fileID: 11400000, guid: 1b1b7ec579de66742a3414cbf1086296, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

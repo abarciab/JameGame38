@@ -31,8 +31,11 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public UnityEvent OnRunStart;
     [HideInInspector] public UnityEvent OnRunEnd;
     [HideInInspector] public bool Running;
+    [HideInInspector] public bool Stunned;
+
     private PlayerCombat _playerCombat;
     public bool movingRight { get; private set; }
+
 
     private void Start()
     {
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Stunned) return;
         handleHorizontalMovement();
         handleJumping();
     }
@@ -84,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Stunned) return;
         var vertical = _rb.velocity.y;
         if (_inputDir.y > 0) vertical = Mathf.Max(vertical, _inputDir.y * _jumpForce);
         var gravityForce = _jumping ? Vector2.zero : Vector2.down * _gravityForce;

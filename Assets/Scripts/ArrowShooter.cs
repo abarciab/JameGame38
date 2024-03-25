@@ -23,7 +23,10 @@ public class ArrowShooter : MonoBehaviour
 
         var arrowPos = transform.TransformPoint(_shootOffset);
         Vector3 dir = arrowPos - transform.position;
+
         Quaternion arrowRot = Quaternion.LookRotation(-dir, Vector3.up);
+        var arrowEuler = arrowRot.eulerAngles - new Vector3(0, 90, 0);
+        arrowRot = Quaternion.Euler(arrowEuler);
 
         var arrow = Instantiate(_arrowPrefab, arrowPos, arrowRot);
         arrow.GetComponent<Rigidbody2D>().velocity = dir.normalized * _shootSpeed;

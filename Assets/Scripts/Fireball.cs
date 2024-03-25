@@ -12,10 +12,12 @@ public class Fireball : MonoBehaviour
     private Rigidbody2D _rb;
     [SerializeField] private float _homingStopRadius = 3;
     private bool _bounced;
+    [SerializeField] private Sound _deflectSound;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        if (_deflectSound) _deflectSound = Instantiate(_deflectSound);
     }
 
     public void SetTarget(Transform target)
@@ -43,9 +45,13 @@ public class Fireball : MonoBehaviour
     {
         var damagable = collider.GetComponent<IDamagable>();
         var bounceData = collider.GetComponent<BounceData>();
+
+        if (bounceData) _deflectSound.Play();
+
         if (bounceData && Bouncable) {
             FindObjectOfType<CameraShake>().ShakeFixed();
             bounceData.OnBounced.Invoke();
+
             if (!bounceData.enabled) {
                 Destroy(gameObject);
                 return;
@@ -61,9 +67,11 @@ public class Fireball : MonoBehaviour
             Homing = false;
         }
         else if (damagable != null) {
-            if (damagable.AcceptDirectHits() && !_bounced || _bounced) damagable.Damage(Damage);
+            if (damagable.AcceptDirectHits() && !_bounced || _bounced) damagable.Damage(Damage, transform);
             Destroy(gameObject);
         }
-        else Destroy(gameObject);
+        else {
+            Destroy(gameObject);
+        }
     }
 }

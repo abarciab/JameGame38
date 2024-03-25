@@ -4,3 +4,4 @@ Soft Music -- DaveJf
 battle.wav -- levelclearer
 Forest Ambient LOOP -- Imjeax
 computer mouse click -- florianreichelt
+Sword Hit -- qubodup

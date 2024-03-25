@@ -53,4 +53,9 @@ public class EnemyStats : MonoBehaviour, IDamagable, IHealth
     {
         return false;
     }
+
+    public void Damage(float amount, Transform source)
+    {
+        Damage(amount);
+    }
 }

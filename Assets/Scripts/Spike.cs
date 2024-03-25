@@ -8,10 +8,12 @@ public class Spike : MonoBehaviour
     [SerializeField] private float _damagaTickTime = 0.3f;
     private float _damageCooldown;
     private PlayerCombat _player;
+    [SerializeField] private Sound _deflectSound;
 
     private void Start()
     {
         _player = GameManager.i.Player.GetComponent<PlayerCombat>();
+        _deflectSound = Instantiate(_deflectSound);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,6 +34,7 @@ public class Spike : MonoBehaviour
         if (Mathf.Abs(transform.localEulerAngles.y) < 0.1f && _player.BlockingDown) {
             var rb = _player.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(rb.velocity.x * 1.5f, Mathf.Abs(rb.velocity.y) * 1.2f);
+            _deflectSound.Play();
             _player.Deflect();
             return;
         }
