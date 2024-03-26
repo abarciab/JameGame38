@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private Vector2 _knockbackforce;
     [SerializeField] private float _knockbackTime = 0.2f;
 
-    public float Health { get; private set;}
+    public float Health { get; private set; }
     public float MaxHealth;
 
     private async void Start()
@@ -53,7 +53,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
 
     public void Heal(float amount)
     {
-        Health = Mathf.Min(1, Health + amount);
+        Health = Mathf.Min(MaxHealth, Health + amount);
         CallEvent();
     }
 
