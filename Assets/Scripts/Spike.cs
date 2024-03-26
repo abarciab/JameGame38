@@ -57,19 +57,6 @@ public class Spike : MonoBehaviour
         _player.Deflect();
     }
 
-    private async void WallSpikeBlock()
-    {
-        var rb = _player.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(rb.velocity.x * -1.1f, Mathf.Abs(rb.velocity.y) * 1.2f);
-        _deflectSound.Play();
-        _player.Deflect();
-
-        _player.GetComponent<PlayerMovement>().Stunned = true;
-        await Task.Delay(500);
-        _player.GetComponent<PlayerMovement>().Stunned = false;
-    }
-
-
     private void Update()
     {
         _damageCooldown -= Time.deltaTime;

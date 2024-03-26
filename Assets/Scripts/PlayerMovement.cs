@@ -7,6 +7,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _knightRenderer;
+
     [Header("Sideways movement")]
     [SerializeField] private float _shieldSpeed = 4;
     [SerializeField] private float _walkSpeed = 7;
@@ -72,10 +74,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) {
             _inputDir.x = -1;
             movingRight = false;
+            _knightRenderer.flipX = true;
         }
         else if (Input.GetKey(KeyCode.D)) {
             _inputDir.x = 1;
             movingRight = true;
+            _knightRenderer.flipX = false;
         }
         else {
             _inputDir.x = Mathf.Lerp(_inputDir.x, 0, _horizontalLerpFactor * Time.deltaTime);

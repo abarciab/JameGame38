@@ -11,6 +11,11 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private int _numRooms = 10;
     private List<Vector3> _unusedExits = new List<Vector3>();
 
+    private void Start()
+    {
+        ClearAndGenerate();
+    }
+
     [ButtonMethod]
     private void ClearAndGenerate()
     {
