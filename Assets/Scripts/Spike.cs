@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
+    [SerializeField] private bool _vertical;
     [SerializeField] private float _damage = 20;
     [SerializeField] private float _damagaTickTime = 0.3f;
     private float _damageCooldown;
@@ -32,16 +34,45 @@ public class Spike : MonoBehaviour
     {
         if (!player) return;
         if (Mathf.Abs(transform.localEulerAngles.y) < 0.1f && _player.BlockingDown) {
-            var rb = _player.GetComponent<Rigidbody2D>();
-            rb.velocity = new Vector2(rb.velocity.x * 1.5f, Mathf.Abs(rb.velocity.y) * 1.2f);
-            _deflectSound.Play();
-            _player.Deflect();
+            FloorSpikeBlock();
+            return;
+        }
+        else if (_vertical && PlayerBlockingOnCorrectSide()) {
+            WallSpikeBlock();
             return;
         }
 
         player.Damage(_damage);
         _damageCooldown = _damagaTickTime;
     }
+
+    private bool PlayerBlockingOnCorrectSide()
+    {
+        bool playerLeft = _player.transform.position.x < transform.position.x;
+        if (playerLeft) return _player.BlockingRight;
+        return _player.BlockingLeft;
+    }
+
+    private void FloorSpikeBlock()
+    {
+        var rb = _player.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(rb.velocity.x * 1.1f, Mathf.Abs(rb.velocity.y) * 1.2f);
+        _deflectSound.Play();
+        _player.Deflect();
+    }
+
+    private async void WallSpikeBlock()
+    {
+        var rb = _player.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(rb.velocity.x * -1.1f, Mathf.Abs(rb.velocity.y) * 1.2f);
+        _deflectSound.Play();
+        _player.Deflect();
+
+        _player.GetComponent<PlayerMovement>().Stunned = true;
+        await Task.Delay(500);
+        _player.GetComponent<PlayerMovement>().Stunned = false;
+    }
+
 
     private void Update()
     {

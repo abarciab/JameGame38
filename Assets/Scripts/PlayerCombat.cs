@@ -15,6 +15,8 @@ public class PlayerCombat : MonoBehaviour
     private float _deflectRemaining;
     [SerializeField] private BounceData _shield;
     [HideInInspector] public bool BlockingDown => ShieldUp && AimingDown();
+    [HideInInspector] public bool BlockingRight => ShieldUp && AimingRight();
+    [HideInInspector] public bool BlockingLeft => ShieldUp && AimingLeft();
 
     private void Start()
     {
@@ -50,6 +52,20 @@ public class PlayerCombat : MonoBehaviour
     private bool AimingDown()
     {
         var down = Quaternion.Euler(0, 0, -90);
+        float angle = Quaternion.Angle(_shieldParent.rotation, down);
+        return angle < 35;
+    }
+
+    private bool AimingRight()
+    {
+        var down = Quaternion.Euler(0, 0, 0);
+        float angle = Quaternion.Angle(_shieldParent.rotation, down);
+        return angle < 35;
+    }
+
+    private bool AimingLeft()
+    {
+        var down = Quaternion.Euler(0, 0, 180);
         float angle = Quaternion.Angle(_shieldParent.rotation, down);
         return angle < 35;
     }

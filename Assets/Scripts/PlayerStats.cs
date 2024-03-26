@@ -36,11 +36,12 @@ public class PlayerStats : MonoBehaviour, IDamagable
         Damage(amount);
 
         bool left = transform.position.x > source.position.x;
-        var kbForce = new Vector2(_knockbackforce.x * (left ? -1 : 1), _knockbackforce.y);
+        var kbForce = new Vector2(_knockbackforce.x * (left ? 1 : -1), _knockbackforce.y);
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         await Task.Yield();
-        GetComponent<Rigidbody2D>().AddForce(kbForce);
+        GetComponent<Rigidbody2D>().velocity = kbForce;
+        print("added force: " + kbForce);
 
         var move = GetComponent<PlayerMovement>();
         move.Stunned = true;

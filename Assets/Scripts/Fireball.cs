@@ -46,7 +46,7 @@ public class Fireball : MonoBehaviour
         var damagable = collider.GetComponent<IDamagable>();
         var bounceData = collider.GetComponent<BounceData>();
 
-        if (bounceData) _deflectSound.Play();
+        if (bounceData && _deflectSound) _deflectSound.Play();
 
         if (bounceData && Bouncable) {
             FindObjectOfType<CameraShake>().ShakeFixed();

@@ -88,7 +88,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Stunned) return;
+        if (Stunned) {
+            _inputDir = Vector2.zero;
+            return;
+        }
+
         var vertical = _rb.velocity.y;
         if (_inputDir.y > 0) vertical = Mathf.Max(vertical, _inputDir.y * _jumpForce);
         var gravityForce = _jumping ? Vector2.zero : Vector2.down * _gravityForce;
