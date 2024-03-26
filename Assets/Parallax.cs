@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Parallax : MonoBehaviour
@@ -8,9 +9,10 @@ public class Parallax : MonoBehaviour
     private Transform _cam;
     private Vector3 _oldPos;
 
-    private void Start()
+    private async void Start()
     {
         _cam = Camera.main.transform.parent;
+        await Task.Yield();
         _oldPos = _cam.position;
     }
 

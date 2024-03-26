@@ -113,7 +113,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2777876020954742587}
@@ -131,8 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f208096286cc0f74d8faeb059eac422a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Homing: 0
+  Bouncable: 0
   Damage: 10
-  _bounce: 0
+  _homingStopRadius: 3
+  _deflectSound: {fileID: 0}
 --- !u!58 &315516752120988486
 CircleCollider2D:
   m_ObjectHideFlags: 0

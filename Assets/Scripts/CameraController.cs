@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
         _fovTarget = _walkRunFOV.x;
         _playerMovement.OnRunStart.AddListener(() => _fovTarget = _walkRunFOV.y);
         _playerMovement.OnRunEnd.AddListener(() => _fovTarget = _walkRunFOV.x);
+        SnapToPosition();
     }
 
     private void Update()
@@ -54,7 +55,17 @@ public class CameraController : MonoBehaviour
         if (_arenaTarget == null) target += offset;
         target.z = transform.position.z;
 
-        transform.position = Vector3.Lerp(transform.position, target, _lerpFactor * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, target, _lerpFactor * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, target, 1);
+    }
+
+    private void SnapToPosition()
+    {
+        var target = _player.position;
+        var offset = new Vector3(_offset.x, _offset.y, transform.position.z);
+        target += offset;
+        target.z = transform.position.z;
+        transform.position = target;
     }
 
     public void EnterArenaMode(Transform arenaTarget, float FOV)

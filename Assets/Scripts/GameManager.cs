@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         fade.Hide();
+        Application.targetFrameRate = 60;
     }
 
     public void Resume()

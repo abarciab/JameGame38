@@ -53,7 +53,7 @@ public class PlayerCombat : MonoBehaviour
     {
         var down = Quaternion.Euler(0, 0, -90);
         float angle = Quaternion.Angle(_shieldParent.rotation, down);
-        return angle < 35;
+        return angle < 50;
     }
 
     private bool AimingRight()
