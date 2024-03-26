@@ -14,17 +14,19 @@ public class Chest : MonoBehaviour
     {
         _openSound = Instantiate(_openSound);
         _player = GameManager.i.Player.transform;
+        _prompt.SetActive(false);
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform == _player) _prompt.SetActive(true);
+        if (!_prompt.activeInHierarchy && collision.transform == _player) _prompt.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerStats>()) _prompt.SetActive(false);
     }
+
 
     private void Update()
     {

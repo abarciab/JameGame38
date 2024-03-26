@@ -37,10 +37,6 @@ public class Spike : MonoBehaviour
             FloorSpikeBlock();
             return;
         }
-        else if (_vertical && PlayerBlockingOnCorrectSide()) {
-            WallSpikeBlock();
-            return;
-        }
 
         player.Damage(_damage);
         _damageCooldown = _damagaTickTime;
