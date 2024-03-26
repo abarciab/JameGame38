@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerCombat _playerCombat;
     public bool movingRight { get; private set; }
-
+    private Vector3 _safePosition;
 
     private void Start()
     {
@@ -107,10 +107,24 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
+        bool grounded = false;
         var colliders = Physics2D.OverlapCircleAll(transform.position + (Vector3)_groundedOffset, _groundedRadius);
-        foreach (var c in colliders) if (c.CompareTag("Ground")) return true;
-        return false;
+        foreach (var c in colliders) if (c.CompareTag("Ground")) grounded = true;
+        if (grounded) _safePosition = transform.position;
+
+        return grounded;
     }
+
+    public void ResetToSafePosition()
+    {
+        transform.position = _safePosition;
+        _rb.velocity = Vector2.zero;
+        _inputDir = Vector2.zero;
+        Stunned = true;
+        Invoke(nameof(UnStun), 0.2f);
+    }
+
+    private void UnStun() => Stunned = false;
 
     private void OnDrawGizmosSelected()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
+    [SerializeField] private bool _resetPlayer;
     [SerializeField] private bool _vertical;
     [SerializeField] private float _damage = 20;
     [SerializeField] private float _damagaTickTime = 0.3f;
@@ -39,6 +40,7 @@ public class Spike : MonoBehaviour
         }
 
         player.Damage(_damage);
+        if (_resetPlayer) _player.GetComponent<PlayerMovement>().ResetToSafePosition();
         _damageCooldown = _damagaTickTime;
     }
 

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class DungeonGenerator : MonoBehaviour
 {
-    [SerializeField] private List<RoomController> _rooms = new List<RoomController>();
-    [SerializeField] private RoomController _bossRoom;
+    [SerializeField] private List<LevelRoomsData> _levels;
     [SerializeField] private Transform _dungeonParent;
     [SerializeField] private int _numRooms = 10;
     private List<Vector3> _unusedExits = new List<Vector3>();
+    private int _currentLevel;
 
     private void Start()
     {
@@ -20,6 +20,7 @@ public class DungeonGenerator : MonoBehaviour
     private void ClearAndGenerate()
     {
         Clear();
+        _unusedExits.Add(_dungeonParent.position);
         Generate();
     }
 
@@ -31,15 +32,18 @@ public class DungeonGenerator : MonoBehaviour
             else DestroyImmediate(_dungeonParent.GetChild(i).gameObject);
         }
         _unusedExits.Clear();
+        _currentLevel = 0;
     }
 
     private void Generate()
     {
-        _unusedExits.Add(_dungeonParent.position);
         for (int i = 0; i < _numRooms; i++) {
-            PlaceRoom(_rooms[Random.Range(0, _rooms.Count)]);
+            var rooms = _levels[_currentLevel].Rooms;
+            PlaceRoom(rooms[Random.Range(0, rooms.Count)]);
         }
-        PlaceRoom(_bossRoom);
+        PlaceRoom(_levels[_currentLevel].BossRoom);
+        _currentLevel += 1;
+        if (_levels.Count > _currentLevel) Generate();
     }
 
     private void PlaceRoom(RoomController toPlace)
