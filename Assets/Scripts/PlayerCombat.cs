@@ -37,8 +37,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (_shieldCooldown > 0) {
             _shieldCooldown -= Time.deltaTime;
-            if (_shieldCooldown <= 0) UIManager.i.HideShieldbar();
-            else UIManager.i.DisplayShieldCooldown(1 - _shieldCooldown / _shieldStunTime);
+            if (_shieldCooldown > 0) UIManager.i.DisplayShieldCooldown(1 - _shieldCooldown / _shieldStunTime);
             return;
         }
 

@@ -70,8 +70,10 @@ MonoBehaviour:
       m_Calls: []
   Running: 0
   Stunned: 0
+  InDangerZone: 0
   _animator: {fileID: 2145744781839237968}
   _jumpSound: {fileID: 11400000, guid: a284cb5aacb3bb747aaac8528ef30b52, type: 2}
+  _landSound: {fileID: 11400000, guid: b806d2cd95b67de4dbb7234be2f90791, type: 2}
 --- !u!114 &8712312398834153178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,8 +88,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shieldParent: {fileID: 6760491032887103094}
   _shieldStunTime: 1.8
-  _deflectTime: 0.2
+  _deflectTime: 0.5
   _shield: {fileID: 4960342425721971469}
+  _raiseShield: {fileID: 11400000, guid: 24095e77717e885479dcb68a424bb378, type: 2}
+  _stowShield: {fileID: 11400000, guid: 70b1b4544f7fe444386b04e492fbc723, type: 2}
 --- !u!50 &627515750365660880
 Rigidbody2D:
   serializedVersion: 4
@@ -244,7 +248,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -355,6 +359,7 @@ GameObject:
   - component: {fileID: 2484855380961843342}
   - component: {fileID: 166748471910047215}
   - component: {fileID: 2145744781839237968}
+  - component: {fileID: 2273273383917826424}
   m_Layer: 7
   m_Name: playerSprite
   m_TagString: Untagged
@@ -450,6 +455,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2273273383917826424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811147638080959962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c767dee00936a4994f8ad0a1c3031e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event1:
+    m_PersistentCalls:
+      m_Calls: []
+  _sound1: {fileID: 11400000, guid: 54306f3aa6e1d484b8556f42e5c2b44d, type: 2}
 --- !u!1 &6426105561638943839
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,53 +1,44 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
-    public ItemData itemData;
-    private SpriteRenderer highlight;
+    [SerializeField] private GameObject _prompt;
+    [SerializeField] private SpriteRenderer _sprite;
 
-    // Start is called before the first frame update
-    void Start()
+    private ItemData _itemData;
+    private Transform _player;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        highlight = gameObject.transform.Find("Highlight").GetComponent<SpriteRenderer>();
-        highlight.enabled = false;
-        if (itemData != null)
-        {
-            gameObject.name = itemData.itemName;
-            gameObject.GetComponent<SpriteRenderer>().sprite = itemData.itemImage;
-        }
+        if (collision.transform == _player) _prompt.SetActive(true);
     }
 
-    public void Highlight(bool state)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        highlight.enabled = state;
-
-        if (state == true)
-        {
-            InventoryManager.Instance.pickupPrompt.transform.position = new Vector2(transform.position.x, transform.position.y + 1);
-        }
-        else
-        {
-            InventoryManager.Instance.pickupPrompt.transform.position = new Vector2(9000, 9000);
-        }
+        if (collision.transform == _player) _prompt.SetActive(false);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        if (collision.gameObject.name == "Player")
-        {
-            InventoryManager.Instance.NearbyItems.Add(this);
-        }
+        _player = GameManager.i.Player.transform;
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    public void Initialize(ItemData item)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            InventoryManager.Instance.NearbyItems.Remove(this);
-            InventoryManager.Instance.highlightedItem = null;
-            Highlight(false);
+        _itemData = item;
+        gameObject.name = _itemData.Name;
+        _sprite.sprite = _itemData.Sprite;
+    }
+
+    private void Update()
+    {
+        if (_prompt.activeInHierarchy && Input.GetKeyDown(KeyCode.E)) {
+            InventoryManager.i.AddItem(_itemData);
+            Destroy(gameObject);
         }
     }
 }

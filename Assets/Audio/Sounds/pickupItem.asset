@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93e0513045be1974d934eb6431407da8, type: 3}
-  m_Name: AltMusic
+  m_Name: pickupItem
   m_EditorClassIdentifier: 
   clips:
-  - name: dragon1BattleMusic
-    clip: {fileID: 8300000, guid: 95d87ad78828b2a459f805aeb1353aa8, type: 3}
-    looping: 1
+  - name: pickupItem
+    clip: {fileID: 8300000, guid: f476a712ad476e24091c2d5de3f31f68, type: 3}
+    looping: 0
     CustomPitchAndVolume: 0
     volume: 0
     pitch: 0
-  type: 1
+  type: 0
   SynchronizePitchAndVolume: 1
-  pitch: 1
-  volume: 0.249
+  pitch: 0.95
+  volume: 0.524
   unpauseable: 0
-  randomizePitch: 0
-  pitchRandomizeAmount: 0
+  randomizePitch: 1
+  pitchRandomizeAmount: 0.027
   audioSource: {fileID: 0}
-  instantialized: 0
+  instantialized: 1

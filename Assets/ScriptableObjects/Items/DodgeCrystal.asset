@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1839201590d85042b23162822a9c3de, type: 3}
   m_Name: DodgeCrystal
   m_EditorClassIdentifier: 
-  itemName: Dodge Crystal
-  itemDescription: Does whatever a dodge crystal does!
-  itemImage: {fileID: 21300000, guid: 85f8e4ab35cc39e4db1377f460c6a248, type: 3}
-  itemType: 1
+  Used: 0
+  Name: Dodge Crystal
+  Description: dodge your next attack!
+  Sprite: {fileID: 21300000, guid: 85f8e4ab35cc39e4db1377f460c6a248, type: 3}
+  Type: 1
+  _healAmount: 0

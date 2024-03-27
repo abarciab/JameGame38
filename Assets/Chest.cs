@@ -12,6 +12,8 @@ public class Chest : MonoBehaviour
     private Transform _player;
     [SerializeField] private UnityEvent _onOpen;
 
+    [SerializeField] private ItemData _item;
+
     private void Start()
     {
         if (_openChest) _openSound = Instantiate(_openSound);
@@ -44,6 +46,8 @@ public class Chest : MonoBehaviour
         _prompt.SetActive(false);
         if (_chestSprite) _chestSprite.sprite = _openChest;
         enabled = false;
-        GetComponent<Collider2D>().enabled = false; 
+        GetComponent<Collider2D>().enabled = false;
+
+        if (_item != null) InventoryManager.i.AddItem(_item);
     }
 }
