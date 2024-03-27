@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Fireball : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Fireball : MonoBehaviour
     [SerializeField] private float _homingStopRadius = 3;
     private bool _bounced;
     [SerializeField] private Sound _deflectSound;
+    [SerializeField] private ParticleSystem _trail;
 
     private void Start()
     {
@@ -53,7 +55,7 @@ public class Fireball : MonoBehaviour
             bounceData.OnBounced.Invoke();
 
             if (!bounceData.enabled) {
-                Destroy(gameObject);
+                Kill();
                 return;
             }
 
@@ -68,10 +70,28 @@ public class Fireball : MonoBehaviour
         }
         else if (damagable != null) {
             if (damagable.AcceptDirectHits() && !_bounced || _bounced) damagable.Damage(Damage, transform);
-            Destroy(gameObject);
+            Kill();
         }
         else {
-            Destroy(gameObject);
+            Kill();
         }
+    }
+
+    private void Kill()
+    {
+        GetComponent<Collider2D>().enabled = false;
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        var light = GetComponentInChildren<Light2D>();
+        if (light) light.enabled = false;
+        if (_trail) _trail.Stop();
+
+        Invoke(nameof(Destroy), 5);
+    }
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

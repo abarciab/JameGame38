@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93e0513045be1974d934eb6431407da8, type: 3}
-  m_Name: PauseMusic
+  m_Name: footstep
   m_EditorClassIdentifier: 
   clips:
-  - name: main_theme
-    clip: {fileID: 8300000, guid: 7d62b4ec47133224a97712aa44caec34, type: 3}
-    looping: 1
+  - name: footstep1
+    clip: {fileID: 8300000, guid: abf6e760e669d1843bd7c608ec5aef51, type: 3}
+    looping: 0
     CustomPitchAndVolume: 0
     volume: 0
     pitch: 0
-  type: 1
+  type: 0
   SynchronizePitchAndVolume: 1
-  pitch: 1
-  volume: 0.077
-  unpauseable: 1
-  randomizePitch: 0
-  pitchRandomizeAmount: 0
+  pitch: 0.915
+  volume: 0.1
+  unpauseable: 0
+  randomizePitch: 1
+  pitchRandomizeAmount: 0.062
   audioSource: {fileID: 0}
-  instantialized: 0
+  instantialized: 1

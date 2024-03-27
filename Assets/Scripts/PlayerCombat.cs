@@ -18,8 +18,15 @@ public class PlayerCombat : MonoBehaviour
     [HideInInspector] public bool BlockingRight => ShieldUp && AimingRight();
     [HideInInspector] public bool BlockingLeft => ShieldUp && AimingLeft();
 
+    [Header("Sounds")]
+    [SerializeField] private Sound _raiseShield; 
+    [SerializeField] private Sound _stowShield; 
+
     private void Start()
     {
+        _raiseShield = Instantiate(_raiseShield);
+        _stowShield = Instantiate(_stowShield);
+
         _playerMovement = GetComponent<PlayerMovement>();
         _shield.OnBounced.AddListener(Deflect);
     }
@@ -35,8 +42,14 @@ public class PlayerCombat : MonoBehaviour
             return;
         }
 
+        if (Input.GetMouseButtonUp(0)) {
+            _stowShield.Play();
+            UIManager.i.StopParryColor();
+        }
+
         if (_playerMovement.Running) ShieldUp = false;
         else if (Input.GetMouseButtonDown(0)) {
+            _raiseShield.Play();
             _deflectRemaining = _deflectTime;
             _shield.enabled = true;
             UIManager.i.StartParryColor();

@@ -451,6 +451,8 @@ MonoBehaviour:
   _breathParticleSystem: {fileID: 4214093272440878514}
   _breathCollider: {fileID: 610649017056815924}
   _animator: {fileID: 6624191304920926887}
+  _wakeSound: {fileID: 11400000, guid: 398777b13c5572f46966ed0dbd19f809, type: 2}
+  _hurtSound: {fileID: 11400000, guid: d8af1155b8f2a8740b026a4c3ef69e72, type: 2}
 --- !u!60 &3411643810991851669
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -894,6 +896,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _sound1: {fileID: 0}
 --- !u!1 &6258239490680996786
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,10 +45,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Sounds")]
     [SerializeField] private Sound _jumpSound;
+    [SerializeField] private Sound _landSound;
 
     private void Start()
     {
         _jumpSound = Instantiate(_jumpSound);
+        _landSound = Instantiate(_landSound);
 
         _rb = GetComponent<Rigidbody2D>();  
         _playerCombat = GetComponent<PlayerCombat>();
@@ -66,20 +68,27 @@ public class PlayerMovement : MonoBehaviour
     private void HandleAnimations()
     {
         _animator.SetBool("running", Running && Mathf.Abs(_rb.velocity.x) > 0.01f);
-        _animator.SetBool("walking", !Running && Mathf.Abs(_rb.velocity.x) > 0.01f);
+        _animator.SetBool("walking", !Running && Mathf.Abs(_rb.velocity.x) > 0.05f);
         _animator.SetFloat("verticalVel", _rb.velocity.y);
-        _animator.SetBool("grounded", IsGrounded());
+
+        bool grounded = IsGrounded();
+        if (!_animator.GetBool("grounded") && grounded) _landSound.Play();
+        _animator.SetBool("grounded", grounded);
     }
 
     private void handleJumping()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
+        bool pressingJump = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
+        bool jumpDown = (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey(KeyCode.W)) || (Input.GetKeyDown(KeyCode.W) && !Input.GetKey(KeyCode.Space));
+        bool jumpUp = (Input.GetKeyUp(KeyCode.Space) && !Input.GetKey(KeyCode.W)) || (Input.GetKeyUp(KeyCode.W) && !Input.GetKey(KeyCode.Space));
+
+        if (jumpDown && IsGrounded()) {
             _jumping = true;
             _jumpSound.Play();
         }
-        if (Input.GetKeyUp(KeyCode.Space)) _jumping = false;
+        if (jumpUp) _jumping = false;
 
-        if (Input.GetKey(KeyCode.Space) && _currentJumpTime < _maxJumpTime && _jumping) {
+        if (pressingJump && _currentJumpTime < _maxJumpTime && _jumping) {
             _currentJumpTime += Time.deltaTime;
             float currentJump = _playerCombat.ShieldUp ? _shieldJumpForce : _jumpForce;
             if (_rb.velocity.y < currentJump) _rb.velocity += Vector2.up * currentJump * Time.deltaTime;

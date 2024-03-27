@@ -40,12 +40,19 @@ public class Dragon : MonoBehaviour
     [Header("References")]
     [SerializeField] private Animator _animator;
 
+    [Header("Sounds")]
+    [SerializeField] private Sound _wakeSound;
+    [SerializeField] private Sound _hurtSound;
+
     private PlayerStats _player;
     private bool _busy;
     private bool _aggro;
 
     private void Start()
     {
+        _wakeSound = Instantiate(_wakeSound);
+        _hurtSound = Instantiate(_hurtSound);
+
         _player = GameManager.i.Player;
         GetComponent<EnemyStats>().OnHealthChange.AddListener(TakeDamage);
         GetComponent<EnemyStats>().OnDie.AddListener(() => AudioManager.i.GetComponent<MusicPlayer>().playAltMusic = false);
@@ -53,12 +60,17 @@ public class Dragon : MonoBehaviour
 
     private void TakeDamage(float value)
     {
+        if (GetComponent<EnemyStats>().HealthPercent() > 0.99f) return;
+
+        _hurtSound.Play();
         StopAllCoroutines();
         ChangePhase(Random.Range(2, 4));
     }
 
     public void Activate()
     {
+        print("Awake");
+        _wakeSound.Play();
         _aggro = true;
         GameManager.i.FightingDragon = true;
         UIManager.i.DisplayBossBar(GetComponent<EnemyStats>());

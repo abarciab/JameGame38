@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     {
         _hpSlider.value = value;
         var col = _hpHaze.color;
-        col.a = 0.8f * (1 - value);
+        col.a = 0.6f * (1 - value);
         _hpHaze.color = col;
 
     }
