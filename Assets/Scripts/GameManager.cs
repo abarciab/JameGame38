@@ -18,6 +18,13 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) TogglePause();
     }
 
+    public void LoadScene(int buildIndex)
+    {
+        StopAllCoroutines();
+        Resume();
+        StartCoroutine(FadeThenLoadScene(buildIndex));
+    }
+
     void TogglePause()
     {
         if (Time.timeScale == 0) Resume();
@@ -69,6 +76,8 @@ public class GameManager : MonoBehaviour
         music.FadeOutCurrent(fade.fadeTime);
         yield return new WaitForSeconds(fade.fadeTime + 0.5f);
         Destroy(AudioManager.i.gameObject);
+        i = null;
+        Destroy(gameObject);
         SceneManager.LoadScene(num);
     }
 

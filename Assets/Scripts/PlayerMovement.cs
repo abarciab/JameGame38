@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public UnityEvent OnRunEnd;
     [HideInInspector] public bool Running;
     [HideInInspector] public bool Stunned;
+    [SerializeField, ReadOnly] public bool InDangerZone;
 
     [SerializeField] private Animator _animator;
 
@@ -130,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         bool grounded = false;
         var colliders = Physics2D.OverlapCircleAll(transform.position + (Vector3)_groundedOffset, _groundedRadius);
         foreach (var c in colliders) if (c.CompareTag("Ground")) grounded = true;
-        if (grounded) _safePosition = transform.position;
+        if (grounded && !InDangerZone) _safePosition = transform.position;
 
         return grounded;
     }
@@ -149,5 +151,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position + (Vector3) _groundedOffset, _groundedRadius);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(_safePosition, 0.1f);
+        Debug.DrawLine(transform.position, _safePosition, Color.green);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Chest : MonoBehaviour
 {
@@ -9,10 +10,11 @@ public class Chest : MonoBehaviour
     [SerializeField] private Sprite _openChest;
     [SerializeField] private Sound _openSound;
     private Transform _player;
+    [SerializeField] private UnityEvent _onOpen;
 
     private void Start()
     {
-        _openSound = Instantiate(_openSound);
+        if (_openChest) _openSound = Instantiate(_openSound);
         _player = GameManager.i.Player.transform;
         _prompt.SetActive(false);
     }
@@ -37,9 +39,10 @@ public class Chest : MonoBehaviour
 
     private void Open()
     {
-        _openSound.Play();
+        _onOpen.Invoke();
+        if (_openChest) _openSound.Play();
         _prompt.SetActive(false);
-        _chestSprite.sprite = _openChest;
+        if (_chestSprite) _chestSprite.sprite = _openChest;
         enabled = false;
         GetComponent<Collider2D>().enabled = false; 
     }

@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _knightRenderer: {fileID: 166748471910047215}
-  _shieldSpeed: 4
+  _shieldSpeed: 5
   _walkSpeed: 5
   _runSpeed: 14
   _horizontalLerpFactor: 9

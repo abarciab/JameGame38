@@ -31,7 +31,7 @@ public class MainMenuController : MonoBehaviour
         fade.Appear();
         yield return new WaitForSeconds(fade.fadeTime + 0.5f);
         Destroy(AudioManager.i.gameObject);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
 
 }

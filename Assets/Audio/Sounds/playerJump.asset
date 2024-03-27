@@ -22,9 +22,9 @@ MonoBehaviour:
   type: 0
   SynchronizePitchAndVolume: 1
   pitch: 0.95
-  volume: 1
+  volume: 0.466
   unpauseable: 0
   randomizePitch: 1
-  pitchRandomizeAmount: 0.03
+  pitchRandomizeAmount: 0.046
   audioSource: {fileID: 0}
   instantialized: 1

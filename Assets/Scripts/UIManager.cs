@@ -11,15 +11,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _hpSlider;
     [SerializeField] private Slider _shieldSlider;
     [SerializeField] private Slider _bossSlider;
+    [SerializeField] private Image _hpHaze;
 
     private void Start()
     {
-        GameManager.i.Player.OnHealthChange.AddListener(UpdatePlayerHealthBar);
+        GameManager.i.Player.OnHealthChange.AddListener(UpdatePlayerHealth);
     }
 
-    private void UpdatePlayerHealthBar(float value)
+    private void UpdatePlayerHealth(float value)
     {
         _hpSlider.value = value;
+        var col = _hpHaze.color;
+        col.a = 0.8f * (1 - value);
+        _hpHaze.color = col;
+
     }
 
     public void DisplayBossBar(IHealth boss)
