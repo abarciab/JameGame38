@@ -7,12 +7,16 @@ public class InventoryManager : MonoBehaviour
     private static InventoryManager instance;
     public static InventoryManager Instance { get { return instance; } }
 
+    public GameObject pickupPrompt;
+    public List<ItemObject> NearbyItems = new List<ItemObject>();
+    public ItemObject highlightedItem;
+
     public ItemData[] itemTypes;
     public static int maxItems = 3;
     public List<ItemData> curItems = new List<ItemData>(maxItems);
     private List<Image> itemImages = new List<Image>(maxItems);
     [SerializeField] Sprite emptyImage;
-    [SerializeField] GameObject slotPrefab;
+    [SerializeField] GameObject slotPrefab, baseItemPrefab;
 
     private void Awake()
     {
@@ -49,31 +53,78 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetInput();
+        CheckNearbyItems();
+    }
+
+    void CheckNearbyItems()
+    {
+        GameObject player = GameManager.i.Player.gameObject;
+        float closestDistance = float.MaxValue;
+        ItemObject nearestItem = null;
+
+        foreach (var item in NearbyItems)
+        {
+            float distance = Vector3.Distance(player.transform.position, item.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                nearestItem = item;
+            }
+        }
+
+        if (nearestItem != null)
+        {
+            if (highlightedItem != null && highlightedItem != nearestItem)
+            {
+                highlightedItem.Highlight(false);
+            }
+            nearestItem.Highlight(true);
+            highlightedItem = nearestItem;
+        }
+    }
+
+    void GetInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && highlightedItem != null && curItems.Count < maxItems)
+        {
+            AddItem(highlightedItem.itemData);
+            Destroy(highlightedItem.gameObject);
+            NearbyItems.Remove(highlightedItem);
+            highlightedItem = null;
+        }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
-            AddItem(itemTypes[0]);
+            SpawnItem(itemTypes[0]);
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            AddItem(itemTypes[1]);
+            SpawnItem(itemTypes[1]);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            AddItem(itemTypes[2]);
+            SpawnItem(itemTypes[2]);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            UseItem(0);
+            UseItemBySlot(0);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            UseItem(1);
+            UseItemBySlot(1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            UseItem(2);
+            UseItemBySlot(2);
         }
+    }
+
+    void SpawnItem(ItemData itemData)
+    {
+        GameObject item = Instantiate(baseItemPrefab, GameManager.i.Player.transform.position, Quaternion.identity);
+        item.GetComponent<ItemObject>().itemData = itemData;
     }
 
     void AddItem(ItemData itemData)
@@ -86,7 +137,7 @@ public class InventoryManager : MonoBehaviour
         UpdateInventoryUI();
     }
 
-    void UseItem(int index)
+    void UseItemBySlot(int index)
     {
         if (index < 0 || index >= curItems.Count) return;
 
@@ -119,7 +170,6 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < maxItems; i++)
         {
-            Debug.Log(i);
             if (i >= curItems.Count || curItems[i] == null)
             {
                 itemImages[i].enabled = false;
