@@ -33,7 +33,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
 
     public void Damage(float amount, Transform source)
     {
-        Damage(amount); 
+        Damage(amount);
         bool left = transform.position.x > source.position.x;
         var kbForce = new Vector2(_knockbackforce.x * (left ? 1 : -1), _knockbackforce.y);
         StartCoroutine(DamageCoroutine(kbForce));

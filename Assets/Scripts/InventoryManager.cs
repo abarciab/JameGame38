@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,9 @@ public class InventoryManager : MonoBehaviour
     public ItemData[] itemTypes;
     public static int maxItems = 3;
     public List<ItemData> curItems = new List<ItemData>(maxItems);
-    public List<Image> itemImages = new List<Image>(maxItems);
+    private List<Image> itemImages = new List<Image>(maxItems);
+    [SerializeField] Sprite emptyImage;
+    [SerializeField] GameObject slotPrefab;
 
     private void Awake()
     {
@@ -32,19 +33,14 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < maxItems; i++)
         {
-            GameObject imageObject = new GameObject("Image" + i);
-            imageObject.transform.SetParent(canvas.transform);
+            GameObject imageObject = Instantiate(slotPrefab, canvas.transform);
+            Image image = imageObject.transform.Find("ItemImage").GetComponent<Image>();
+            image.enabled = false;
 
-            RectTransform rectTransform = imageObject.AddComponent<RectTransform>();
-            rectTransform.anchorMin = new Vector2(0, 1);
-            rectTransform.anchorMax = new Vector2(0, 1);
-            rectTransform.pivot = new Vector2(0, 1);
-            rectTransform.sizeDelta = new Vector2(64, 64);
-            rectTransform.anchoredPosition = new Vector2(64, -i * rectTransform.rect.height - 64);
-
-            Debug.Log(rectTransform.anchoredPosition);
-
-            Image image = imageObject.AddComponent<Image>();
+            Rect rect = canvas.GetComponent<RectTransform>().rect;
+            float xPos = -rect.width / 2 + 16;
+            float yPos = rect.height / 2 - 16 - i * image.rectTransform.rect.height;
+            imageObject.transform.localPosition = new Vector2(xPos, yPos);
 
             itemImages.Add(image);
         }
@@ -57,10 +53,26 @@ public class InventoryManager : MonoBehaviour
         {
             AddItem(itemTypes[0]);
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            AddItem(itemTypes[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            AddItem(itemTypes[2]);
+        }
 
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             UseItem(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UseItem(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UseItem(2);
         }
     }
 
@@ -90,6 +102,9 @@ public class InventoryManager : MonoBehaviour
             case ItemType.DodgeCrystal:
                 Debug.Log("Doing whatever a dodge crystal does");
                 break;
+            case ItemType.Spear:
+                Debug.Log("Throwing a spear");
+                break;
             default:
                 Debug.Log("Item type not recognized");
                 break;
@@ -104,12 +119,14 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < maxItems; i++)
         {
+            Debug.Log(i);
             if (i >= curItems.Count || curItems[i] == null)
             {
-                itemImages[i].sprite = null;
+                itemImages[i].enabled = false;
             }
             else
             {
+                itemImages[i].enabled = true;
                 itemImages[i].sprite = curItems[i].itemImage;
             }
         }

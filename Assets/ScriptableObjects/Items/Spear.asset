@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1839201590d85042b23162822a9c3de, type: 3}
-  m_Name: DodgeCrystal
+  m_Name: Spear
   m_EditorClassIdentifier: 
-  itemName: Dodge Crystal
-  itemDescription: Does whatever a dodge crystal does!
-  itemImage: {fileID: 21300000, guid: 85f8e4ab35cc39e4db1377f460c6a248, type: 3}
-  itemType: 1
+  itemName: Spear
+  itemDescription: ARROW'D
+  itemImage: {fileID: 21300000, guid: f3ee685b8e3124340a5cddf5835ae393, type: 3}
+  itemType: 2
