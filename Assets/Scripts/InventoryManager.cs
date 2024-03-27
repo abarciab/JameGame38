@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour
     private static InventoryManager instance;
     public static InventoryManager Instance { get { return instance; } }
 
+    public GameObject pickupPrompt;
     public List<ItemObject> NearbyItems = new List<ItemObject>();
     public ItemObject highlightedItem;
 
@@ -85,7 +86,7 @@ public class InventoryManager : MonoBehaviour
 
     void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.E) && highlightedItem != null)
+        if (Input.GetKeyDown(KeyCode.E) && highlightedItem != null && curItems.Count < maxItems)
         {
             AddItem(highlightedItem.itemData);
             Destroy(highlightedItem.gameObject);

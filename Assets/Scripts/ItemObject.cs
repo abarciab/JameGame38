@@ -19,9 +19,18 @@ public class ItemObject : MonoBehaviour
         }
     }
 
-    public void Highlight(bool on)
+    public void Highlight(bool state)
     {
-        highlight.enabled = on;
+        highlight.enabled = state;
+
+        if (state == true)
+        {
+            InventoryManager.Instance.pickupPrompt.transform.position = new Vector2(transform.position.x, transform.position.y + 1);
+        }
+        else
+        {
+            InventoryManager.Instance.pickupPrompt.transform.position = new Vector2(9000, 9000);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
