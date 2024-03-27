@@ -7,6 +7,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerCombat))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _knightRenderer;
+
     [Header("Sideways movement")]
     [SerializeField] private float _shieldSpeed = 4;
     [SerializeField] private float _walkSpeed = 7;
@@ -35,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerCombat _playerCombat;
     public bool movingRight { get; private set; }
-
+    private Vector3 _safePosition;
 
     private void Start()
     {
@@ -72,10 +74,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) {
             _inputDir.x = -1;
             movingRight = false;
+            _knightRenderer.flipX = true;
         }
         else if (Input.GetKey(KeyCode.D)) {
             _inputDir.x = 1;
             movingRight = true;
+            _knightRenderer.flipX = false;
         }
         else {
             _inputDir.x = Mathf.Lerp(_inputDir.x, 0, _horizontalLerpFactor * Time.deltaTime);
@@ -103,10 +107,24 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
+        bool grounded = false;
         var colliders = Physics2D.OverlapCircleAll(transform.position + (Vector3)_groundedOffset, _groundedRadius);
-        foreach (var c in colliders) if (c.CompareTag("Ground")) return true;
-        return false;
+        foreach (var c in colliders) if (c.CompareTag("Ground")) grounded = true;
+        if (grounded) _safePosition = transform.position;
+
+        return grounded;
     }
+
+    public void ResetToSafePosition()
+    {
+        transform.position = _safePosition;
+        _rb.velocity = Vector2.zero;
+        _inputDir = Vector2.zero;
+        Stunned = true;
+        Invoke(nameof(UnStun), 0.2f);
+    }
+
+    private void UnStun() => Stunned = false;
 
     private void OnDrawGizmosSelected()
     {

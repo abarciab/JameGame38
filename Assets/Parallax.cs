@@ -9,12 +9,13 @@ public class Parallax : MonoBehaviour
     private Transform _cam;
     private Vector3 _oldPos;
 
-    private async void Start()
+    private void Start()
     {
         _cam = Camera.main.transform.parent;
-        await Task.Yield();
-        _oldPos = _cam.position;
+        Invoke(nameof(SetPos), 0.01f);
     }
+
+    private void SetPos() => _oldPos = _cam.position;
 
     private void Update()
     {

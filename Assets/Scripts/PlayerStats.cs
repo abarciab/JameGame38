@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Threading.Tasks;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -12,15 +10,16 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [HideInInspector] public UnityEvent<float> OnHealthChange;
     [SerializeField] private Vector2 _knockbackforce;
     [SerializeField] private float _knockbackTime = 0.2f;
+    [SerializeField] private Sound _hurtSound;
 
     public float Health { get; private set; }
     public float MaxHealth;
 
-    private async void Start()
+    private void Start()
     {
+        _hurtSound = Instantiate(_hurtSound);
         Health = MaxHealth;
-        await Task.Yield();
-        CallEvent();
+        Invoke(nameof(CallEvent), 0.01f);
     }
 
     public void Damage(float amount)
@@ -29,24 +28,28 @@ public class PlayerStats : MonoBehaviour, IDamagable
         Health = Mathf.Max(0, Health - amount);
         CallEvent();
         if (Health <= 0) Die();
+        else _hurtSound.Play();
     }
 
-    public async void Damage(float amount, Transform source)
+    public void Damage(float amount, Transform source)
     {
         Damage(amount);
-
         bool left = transform.position.x > source.position.x;
         var kbForce = new Vector2(_knockbackforce.x * (left ? 1 : -1), _knockbackforce.y);
+        StartCoroutine(DamageCoroutine(kbForce));
+    }
 
+    private IEnumerator DamageCoroutine(Vector2 kbForce)
+    {
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        await Task.Yield();
+        yield return new WaitForEndOfFrame();
         GetComponent<Rigidbody2D>().velocity = kbForce;
         print("added force: " + kbForce);
 
         var move = GetComponent<PlayerMovement>();
         move.Stunned = true;
 
-        await Task.Delay(Mathf.RoundToInt(_knockbackTime * 1000));
+        yield return new WaitForSeconds(_knockbackTime);
 
         move.Stunned = false;
     }

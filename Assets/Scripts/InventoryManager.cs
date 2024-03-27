@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +7,16 @@ public class InventoryManager : MonoBehaviour
     private static InventoryManager instance;
     public static InventoryManager Instance { get { return instance; } }
 
+    public GameObject pickupPrompt;
+    public List<ItemObject> NearbyItems = new List<ItemObject>();
+    public ItemObject highlightedItem;
+
     public ItemData[] itemTypes;
     public static int maxItems = 3;
     public List<ItemData> curItems = new List<ItemData>(maxItems);
-    public List<Image> itemImages = new List<Image>(maxItems);
+    private List<Image> itemImages = new List<Image>(maxItems);
+    [SerializeField] Sprite emptyImage;
+    [SerializeField] GameObject slotPrefab, baseItemPrefab;
 
     private void Awake()
     {
@@ -32,19 +37,14 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < maxItems; i++)
         {
-            GameObject imageObject = new GameObject("Image" + i);
-            imageObject.transform.SetParent(canvas.transform);
+            GameObject imageObject = Instantiate(slotPrefab, canvas.transform);
+            Image image = imageObject.transform.Find("ItemImage").GetComponent<Image>();
+            image.enabled = false;
 
-            RectTransform rectTransform = imageObject.AddComponent<RectTransform>();
-            rectTransform.anchorMin = new Vector2(0, 1);
-            rectTransform.anchorMax = new Vector2(0, 1);
-            rectTransform.pivot = new Vector2(0, 1);
-            rectTransform.sizeDelta = new Vector2(64, 64);
-            rectTransform.anchoredPosition = new Vector2(64, -i * rectTransform.rect.height - 64);
-
-            Debug.Log(rectTransform.anchoredPosition);
-
-            Image image = imageObject.AddComponent<Image>();
+            Rect rect = canvas.GetComponent<RectTransform>().rect;
+            float xPos = -rect.width / 2 + 16;
+            float yPos = rect.height / 2 - 16 - i * image.rectTransform.rect.height;
+            imageObject.transform.localPosition = new Vector2(xPos, yPos);
 
             itemImages.Add(image);
         }
@@ -53,15 +53,78 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        GetInput();
+        CheckNearbyItems();
+    }
+
+    void CheckNearbyItems()
+    {
+        GameObject player = GameManager.i.Player.gameObject;
+        float closestDistance = float.MaxValue;
+        ItemObject nearestItem = null;
+
+        foreach (var item in NearbyItems)
         {
-            AddItem(itemTypes[0]);
+            float distance = Vector3.Distance(player.transform.position, item.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                nearestItem = item;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
+        if (nearestItem != null)
         {
-            UseItem(0);
+            if (highlightedItem != null && highlightedItem != nearestItem)
+            {
+                highlightedItem.Highlight(false);
+            }
+            nearestItem.Highlight(true);
+            highlightedItem = nearestItem;
         }
+    }
+
+    void GetInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && highlightedItem != null && curItems.Count < maxItems)
+        {
+            AddItem(highlightedItem.itemData);
+            Destroy(highlightedItem.gameObject);
+            NearbyItems.Remove(highlightedItem);
+            highlightedItem = null;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SpawnItem(itemTypes[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SpawnItem(itemTypes[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SpawnItem(itemTypes[2]);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            UseItemBySlot(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UseItemBySlot(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UseItemBySlot(2);
+        }
+    }
+
+    void SpawnItem(ItemData itemData)
+    {
+        GameObject item = Instantiate(baseItemPrefab, GameManager.i.Player.transform.position, Quaternion.identity);
+        item.GetComponent<ItemObject>().itemData = itemData;
     }
 
     void AddItem(ItemData itemData)
@@ -74,7 +137,7 @@ public class InventoryManager : MonoBehaviour
         UpdateInventoryUI();
     }
 
-    void UseItem(int index)
+    void UseItemBySlot(int index)
     {
         if (index < 0 || index >= curItems.Count) return;
 
@@ -89,6 +152,9 @@ public class InventoryManager : MonoBehaviour
                 break;
             case ItemType.DodgeCrystal:
                 Debug.Log("Doing whatever a dodge crystal does");
+                break;
+            case ItemType.Spear:
+                Debug.Log("Throwing a spear");
                 break;
             default:
                 Debug.Log("Item type not recognized");
@@ -106,10 +172,11 @@ public class InventoryManager : MonoBehaviour
         {
             if (i >= curItems.Count || curItems[i] == null)
             {
-                itemImages[i].sprite = null;
+                itemImages[i].enabled = false;
             }
             else
             {
+                itemImages[i].enabled = true;
                 itemImages[i].sprite = curItems[i].itemImage;
             }
         }

@@ -53,6 +53,7 @@ public class Dragon : MonoBehaviour
 
     private void TakeDamage(float value)
     {
+        StopAllCoroutines();
         ChangePhase(Random.Range(2, 4));
     }
 
@@ -75,8 +76,8 @@ public class Dragon : MonoBehaviour
         FacePlayer();
 
         if (_currentPhase == 1) DoPhase1Behavior();
-        if (_currentPhase == 2) DoPhase2Behavior();
-        if (_currentPhase == 3) DoPhase3Behavior();
+        if (_currentPhase == 2) StartCoroutine(DoPhase2Behavior());
+        if (_currentPhase == 3) StartCoroutine(DoPhase3Behavior());
 
     }
 
@@ -95,21 +96,21 @@ public class Dragon : MonoBehaviour
         }
     }
 
-    private async void DoPhase2Behavior()
+    private IEnumerator DoPhase2Behavior()
     {
         _busy = true;
         transform.position = _topPos.position;
-        await Task.Delay(500);
+        yield return new WaitForSeconds(0.5f);
         _animator.SetTrigger(_fireRainAnimTriggerString);
     }
 
-    private async void DoPhase3Behavior()
+    private IEnumerator DoPhase3Behavior()
     {
         _busy = true;
         bool left = Random.Range(0, 1f) > 0.5f;
         transform.position = left ? _leftTopPerch.position : _rightTopPerch.position;
         transform.localEulerAngles = new Vector3(0, left ? 0 : 180, 0);
-        await Task.Delay(1200);
+        yield return new WaitForSeconds(1.2f);
         _animator.SetTrigger(_fireBreathAnimTriggerString);
     }
 
@@ -124,25 +125,25 @@ public class Dragon : MonoBehaviour
 
     public void DoAttack()
     {
-        if (_currentPhase == 1) ShootFireball();
-        if (_currentPhase == 2) RainFire();
-        if (_currentPhase == 3) BreatheFire();
+        if (_currentPhase == 1) StartCoroutine(ShootFireball());
+        if (_currentPhase == 2) StartCoroutine(RainFire());
+        if (_currentPhase == 3) StartCoroutine(BreatheFire());
     }
 
-    private async void BreatheFire()
+    private IEnumerator BreatheFire()
     {
         _breathParticleSystem.Play();
-        await Task.Delay(1200);
+        yield return new WaitForSeconds(1.2f);
         _breathCollider.Checking = true;
-        await Task.Delay(2200);
+        yield return new WaitForSeconds(2.2f);
         _breathParticleSystem.Stop();
-        await Task.Delay(100);
+        yield return new WaitForSeconds(0.1f);
         _breathCollider.Checking = false;
-        await Task.Delay(400);
+        yield return new WaitForSeconds(0.4f);
         ChangePhase(Random.Range(1, 3));
     }
 
-    private async void RainFire()
+    private IEnumerator RainFire()
     {
         int originalLayer = gameObject.layer;
         gameObject.layer = 3;
@@ -152,16 +153,16 @@ public class Dragon : MonoBehaviour
             var offset = i * _fireRainStep;
             Instantiate(_fireRainPrefab, pos + Vector3.left * offset, Quaternion.identity);
             if (i > 0) Instantiate(_fireRainPrefab, pos + Vector3.right * offset, Quaternion.identity);
-            await Task.Delay(150);
+            yield return new WaitForSeconds(.15f);
         }
 
-        await Task.Delay(700);
+        yield return new WaitForSeconds(0.7f);
         gameObject.layer = originalLayer;
 
         ChangePhase(Random.Range(1, 4));
     }
 
-    private async void ShootFireball()
+    private IEnumerator ShootFireball()
     {
         _shootCooldown = _shootResetTime;
         var pos = transform.TransformPoint((Vector3)_firePoint);
@@ -176,7 +177,7 @@ public class Dragon : MonoBehaviour
 
         _numFireballsShot += 1;
         if (_numFireballsShot >= _numFireballs) {
-            await Task.Delay(1000);
+            yield return new WaitForSeconds(1f);
             ChangePhase(Random.Range(2, 4));
         }
 
