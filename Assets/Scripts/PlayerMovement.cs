@@ -35,26 +35,46 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool Running;
     [HideInInspector] public bool Stunned;
 
+    [SerializeField] private Animator _animator;
+
     private PlayerCombat _playerCombat;
     public bool movingRight { get; private set; }
     private Vector3 _safePosition;
 
+    [Header("Sounds")]
+    [SerializeField] private Sound _jumpSound;
+
     private void Start()
     {
+        _jumpSound = Instantiate(_jumpSound);
+
         _rb = GetComponent<Rigidbody2D>();  
         _playerCombat = GetComponent<PlayerCombat>();
     }
 
     private void Update()
     {
+        HandleAnimations();
+
         if (Stunned) return;
         handleHorizontalMovement();
         handleJumping();
     }
 
+    private void HandleAnimations()
+    {
+        _animator.SetBool("running", Running && Mathf.Abs(_rb.velocity.x) > 0.01f);
+        _animator.SetBool("walking", !Running && Mathf.Abs(_rb.velocity.x) > 0.01f);
+        _animator.SetFloat("verticalVel", _rb.velocity.y);
+        _animator.SetBool("grounded", IsGrounded());
+    }
+
     private void handleJumping()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) _jumping = true;
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()) {
+            _jumping = true;
+            _jumpSound.Play();
+        }
         if (Input.GetKeyUp(KeyCode.Space)) _jumping = false;
 
         if (Input.GetKey(KeyCode.Space) && _currentJumpTime < _maxJumpTime && _jumping) {

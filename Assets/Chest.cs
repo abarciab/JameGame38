@@ -41,6 +41,6 @@ public class Chest : MonoBehaviour
         _prompt.SetActive(false);
         _chestSprite.sprite = _openChest;
         enabled = false;
-        GetComponent<Collider2D>().enabled = false;   
+        GetComponent<Collider2D>().enabled = false; 
     }
 }
