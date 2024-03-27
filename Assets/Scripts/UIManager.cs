@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _bossSlider;
     [SerializeField] private Image _hpHaze;
 
+    [SerializeField] private Color _parryColor;
+    [SerializeField] private Color _normalColor;
+    [SerializeField] private Color _reloadingColor;
+
     private void Start()
     {
         GameManager.i.Player.OnHealthChange.AddListener(UpdatePlayerHealth);
@@ -40,12 +44,21 @@ public class UIManager : MonoBehaviour
 
     public void HideShieldbar()
     {
-        _shieldSlider.gameObject.SetActive(false);
     }
 
     public void DisplayShieldCooldown(float value)
     {
-        _shieldSlider.gameObject.SetActive(true);
         _shieldSlider.value = value;
+        _shieldSlider.fillRect.GetComponent<Image>().color = value > 0.95f ? _parryColor : _reloadingColor;
+    }
+
+    public void StartParryColor()
+    {
+        _shieldSlider.fillRect.GetComponent<Image>().color = _parryColor;
+    }
+
+    public void StopParryColor()
+    {
+        _shieldSlider.fillRect.GetComponent<Image>().color = _normalColor;
     }
 }

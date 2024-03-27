@@ -39,12 +39,16 @@ public class PlayerCombat : MonoBehaviour
         else if (Input.GetMouseButtonDown(0)) {
             _deflectRemaining = _deflectTime;
             _shield.enabled = true;
+            UIManager.i.StartParryColor();
         }
         ShieldUp = Input.GetMouseButton(0);
         
         if (ShieldUp) {
             _deflectRemaining -= Time.deltaTime;
-            if (_deflectRemaining <= 0) _shield.enabled = false;
+            if (_deflectRemaining <= 0) {
+                UIManager.i.StopParryColor();
+                _shield.enabled = false;
+            }
             TrackMouse();
         }
     }
