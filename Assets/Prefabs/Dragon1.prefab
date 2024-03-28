@@ -445,9 +445,11 @@ MonoBehaviour:
   _fireRainCount: 15
   _fireRainStep: 4
   _fireBreathAnimTriggerString: Fire breath
+  _fireBreathLoopAnimString: Fire breath loop
   _leftTopPerch: {fileID: 0}
   _rightTopPerch: {fileID: 0}
   _fireBreathTime: 4
+  _fireBreathLight: {fileID: 0}
   _breathParticleSystem: {fileID: 4214093272440878514}
   _breathCollider: {fileID: 610649017056815924}
   _animator: {fileID: 6624191304920926887}
@@ -1059,13 +1061,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6815747606259606865}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.30653206, w: 0.9518603}
-  m_LocalPosition: {x: 4.260002, y: 3.5699997, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.36325482, w: 0.93168986}
+  m_LocalPosition: {x: 3.45, y: 2.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2185014712957106865}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35.701}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -42.6}
 --- !u!198 &4214093272440878514
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -1148,9 +1150,9 @@ ParticleSystem:
     enabled: 1
     startLifetime:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 2.54
-      minScalar: 5
+      minMaxState: 3
+      scalar: 0.7
+      minScalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1202,7 +1204,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1319,9 +1321,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 1
-      minScalar: 1
+      minMaxState: 3
+      scalar: 0.5
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1372,7 +1374,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1425,7 +1427,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1698,7 +1700,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 20
+    angle: 23.8
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -1784,7 +1786,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.11
       mode: 0
       spread: 0
       speed:
@@ -1903,7 +1905,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 350
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -2009,20 +2011,20 @@ ParticleSystem:
     m_BurstCount: 0
     m_Bursts: []
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
+          value: 0.5
           inSlope: 0
-          outSlope: 1
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
@@ -2031,7 +2033,7 @@ ParticleSystem:
           time: 1
           value: 1
           inSlope: 1
-          outSlope: 0
+          outSlope: 1
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
@@ -2581,7 +2583,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 20
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5830,7 +5832,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

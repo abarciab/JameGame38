@@ -15,6 +15,7 @@ public class Fireball : MonoBehaviour
     private bool _bounced;
     [SerializeField] private Sound _deflectSound;
     [SerializeField] private ParticleSystem _trail;
+    [SerializeField] private float _deathTime = 5;
 
     private void Start()
     {
@@ -87,7 +88,7 @@ public class Fireball : MonoBehaviour
         if (light) light.enabled = false;
         if (_trail) _trail.Stop();
 
-        Invoke(nameof(Destroy), 5);
+        Invoke(nameof(Destroy), _deathTime);
     }
 
     private void Destroy()

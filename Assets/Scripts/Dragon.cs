@@ -1,9 +1,8 @@
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Dragon : MonoBehaviour
 {
@@ -31,9 +30,11 @@ public class Dragon : MonoBehaviour
 
     [Header("Attack3 - fire breath")]
     [SerializeField] private string _fireBreathAnimTriggerString = "Fire breath";
+    [SerializeField] private string _fireBreathLoopAnimString = "Fire breath loop";
     [SerializeField] private Transform _leftTopPerch;
     [SerializeField] private Transform _rightTopPerch;
     [SerializeField] private float _fireBreathTime = 4;
+    [SerializeField] private Light2D _fireBreathLight;
     [SerializeField] private ParticleSystem _breathParticleSystem;
     [SerializeField] private DragonFireBreathCollider _breathCollider;
 
@@ -129,6 +130,7 @@ public class Dragon : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, left ? 0 : 180, 0);
         yield return new WaitForSeconds(1.2f);
         _animator.SetTrigger(_fireBreathAnimTriggerString);
+        _animator.SetBool(_fireBreathLoopAnimString, true);
     }
 
     private void ChangePhase(int newPhase)
@@ -149,13 +151,16 @@ public class Dragon : MonoBehaviour
 
     private IEnumerator BreatheFire()
     {
+        _fireBreathLight.enabled = true;
         _breathParticleSystem.Play();
         yield return new WaitForSeconds(1.2f);
         _breathCollider.Checking = true;
         yield return new WaitForSeconds(2.2f);
         _breathParticleSystem.Stop();
+        _fireBreathLight.enabled = false;
         yield return new WaitForSeconds(0.1f);
         _breathCollider.Checking = false;
+        _animator.SetBool(_fireBreathLoopAnimString, false);
         yield return new WaitForSeconds(0.4f);
         ChangePhase(Random.Range(1, 3));
     }

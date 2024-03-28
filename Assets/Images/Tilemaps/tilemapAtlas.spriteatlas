@@ -120,6 +120,10 @@ SpriteAtlas:
     - 5b9645f6ac7d84741a2bd34db64ec6b2: -412268726
     - 5b9645f6ac7d84741a2bd34db64ec6b2: 1511525724
     - 5b9645f6ac7d84741a2bd34db64ec6b2: 1176267207
+    - c0fddd3791d1cde40ba05923ba92e738: -1240430700
+    - c0fddd3791d1cde40ba05923ba92e738: 659319562
+    - c0fddd3791d1cde40ba05923ba92e738: -1263067775
+    - c0fddd3791d1cde40ba05923ba92e738: 616105008
     - fe18d9773a4bae64987bc1ded9edf0f3: 21300000
     - 41dd0b8777e988741bf2fd9edff31897: -1011038223
     - 41dd0b8777e988741bf2fd9edff31897: 1060516387
@@ -130,6 +134,7 @@ SpriteAtlas:
     - 290ff929f4976b84eaf4dd9fc61899bf: 21300000
     - 4b59a479fb0f4a54bb92c362cb494df1: 21300000
     - 1db4288a2c349084fb5510902e40d7ac: 21300000
+    - 1a04b6bae881d3d4887651d390e238cd: 21300000
     - 2b47cacaa22e3ec409b8ddfb9782ef44: 21300000
     - eb02315bf73b94048ae519504c6b645e: 21300000
     - f3ee685b8e3124340a5cddf5835ae393: 21300000
@@ -155,6 +160,10 @@ SpriteAtlas:
     - 022e429c8b842f84eadab8639ca5fc67: -1872232579
     - 022e429c8b842f84eadab8639ca5fc67: 955378399
     - 022e429c8b842f84eadab8639ca5fc67: 1609031952
+    - a9c0e4aced873ec4c83b3a3b2c035767: 2130707385
+    - a9c0e4aced873ec4c83b3a3b2c035767: -1356268453
+    - a9c0e4aced873ec4c83b3a3b2c035767: 1416121839
+    - a9c0e4aced873ec4c83b3a3b2c035767: -1238399723
     - 248f223d01eb5c74482f1b4d3ee2f09e: 21300000
     - 13b83ecde7473ac4da83c25e90609783: 21300000
     - 15da565e643836e45b91415591093ec8: 21300000
@@ -242,6 +251,10 @@ SpriteAtlas:
   - {fileID: -412268726, guid: 5b9645f6ac7d84741a2bd34db64ec6b2, type: 3}
   - {fileID: 1511525724, guid: 5b9645f6ac7d84741a2bd34db64ec6b2, type: 3}
   - {fileID: 1176267207, guid: 5b9645f6ac7d84741a2bd34db64ec6b2, type: 3}
+  - {fileID: -1240430700, guid: c0fddd3791d1cde40ba05923ba92e738, type: 3}
+  - {fileID: 659319562, guid: c0fddd3791d1cde40ba05923ba92e738, type: 3}
+  - {fileID: -1263067775, guid: c0fddd3791d1cde40ba05923ba92e738, type: 3}
+  - {fileID: 616105008, guid: c0fddd3791d1cde40ba05923ba92e738, type: 3}
   - {fileID: 21300000, guid: fe18d9773a4bae64987bc1ded9edf0f3, type: 3}
   - {fileID: -1011038223, guid: 41dd0b8777e988741bf2fd9edff31897, type: 3}
   - {fileID: 1060516387, guid: 41dd0b8777e988741bf2fd9edff31897, type: 3}
@@ -252,6 +265,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 290ff929f4976b84eaf4dd9fc61899bf, type: 3}
   - {fileID: 21300000, guid: 4b59a479fb0f4a54bb92c362cb494df1, type: 3}
   - {fileID: 21300000, guid: 1db4288a2c349084fb5510902e40d7ac, type: 3}
+  - {fileID: 21300000, guid: 1a04b6bae881d3d4887651d390e238cd, type: 3}
   - {fileID: 21300000, guid: 2b47cacaa22e3ec409b8ddfb9782ef44, type: 3}
   - {fileID: 21300000, guid: eb02315bf73b94048ae519504c6b645e, type: 3}
   - {fileID: 21300000, guid: f3ee685b8e3124340a5cddf5835ae393, type: 3}
@@ -277,6 +291,10 @@ SpriteAtlas:
   - {fileID: -1872232579, guid: 022e429c8b842f84eadab8639ca5fc67, type: 3}
   - {fileID: 955378399, guid: 022e429c8b842f84eadab8639ca5fc67, type: 3}
   - {fileID: 1609031952, guid: 022e429c8b842f84eadab8639ca5fc67, type: 3}
+  - {fileID: 2130707385, guid: a9c0e4aced873ec4c83b3a3b2c035767, type: 3}
+  - {fileID: -1356268453, guid: a9c0e4aced873ec4c83b3a3b2c035767, type: 3}
+  - {fileID: 1416121839, guid: a9c0e4aced873ec4c83b3a3b2c035767, type: 3}
+  - {fileID: -1238399723, guid: a9c0e4aced873ec4c83b3a3b2c035767, type: 3}
   - {fileID: 21300000, guid: 248f223d01eb5c74482f1b4d3ee2f09e, type: 3}
   - {fileID: 21300000, guid: 13b83ecde7473ac4da83c25e90609783, type: 3}
   - {fileID: 21300000, guid: 15da565e643836e45b91415591093ec8, type: 3}
@@ -363,6 +381,10 @@ SpriteAtlas:
   - dragonIdle_1
   - dragonIdle_0
   - dragonIdle_2
+  - fireBig_2
+  - fireBig_3
+  - fireBig_0
+  - fireBig_1
   - axe_handle_full
   - knightFall_0
   - knightFall_1
@@ -373,6 +395,7 @@ SpriteAtlas:
   - item2
   - knightHurt
   - lanternOff
+  - healthPotion
   - bench_2
   - testImage
   - SpearPlaceholder
@@ -398,6 +421,10 @@ SpriteAtlas:
   - knightRun_3
   - knightRun_0
   - knightRun_1
+  - dragonBreath_1
+  - dragonBreath_0
+  - dragonBreath_3
+  - dragonBreath_2
   - dragonIdle wip0
   - axe_wall_connection
   - EmptySlotPlaceholder
