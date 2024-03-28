@@ -18,10 +18,12 @@ public class InventoryManager : MonoBehaviour
     private int maxItems => UIManager.i.MaxItems;
 
     [SerializeField] private Sound _pickupSound;
+    [SerializeField] private Sound _useItemSound;
 
     private void Start()
     {
         _pickupSound = Instantiate(_pickupSound);
+        _useItemSound = Instantiate(_useItemSound);
     }
 
     void Update()
@@ -53,6 +55,7 @@ public class InventoryManager : MonoBehaviour
         ItemData item = _items[index];
         item.Use();
         _items.RemoveAt(index);
+        _useItemSound.Play();
 
         UIManager.i.UpdateInventory(_items);
     }

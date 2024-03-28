@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = Vector2.zero;
         _inputDir = Vector2.zero;
         Stunned = true;
-        Invoke(nameof(UnStun), 0.8f);
+        Invoke(nameof(UnStun), 0.5f);
     }
 
     private void UnStun() => Stunned = false;

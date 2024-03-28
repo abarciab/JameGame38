@@ -23620,7 +23620,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9069884902514754, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.052289933
+      value: 0.21013027
       objectReference: {fileID: 0}
     - target: {fileID: 9069884902514754, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -23632,15 +23632,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9069884902514754, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.998632
+      value: 0.9776734
       objectReference: {fileID: 0}
     - target: {fileID: 4184002929469088876, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.2
+      value: 31.45
       objectReference: {fileID: 0}
     - target: {fileID: 4184002929469088876, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.15
+      value: -19.24
       objectReference: {fileID: 0}
     - target: {fileID: 4184002929469088876, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23680,15 +23680,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6482413803278715671, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_PointLightInnerAngle
-      value: 100.55
+      value: 72.64
       objectReference: {fileID: 0}
     - target: {fileID: 6482413803278715671, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_PointLightOuterAngle
-      value: 133.63
+      value: 98.84
       objectReference: {fileID: 0}
     - target: {fileID: 6482413803278715671, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_PointLightOuterRadius
-      value: 9.958557
+      value: 10.3404665
       objectReference: {fileID: 0}
     - target: {fileID: 7111887941199748003, guid: 8a2c0b37f67b60b47bca39ceea2a2d2b, type: 3}
       propertyPath: m_Name

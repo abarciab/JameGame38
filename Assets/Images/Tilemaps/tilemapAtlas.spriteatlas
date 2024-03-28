@@ -167,6 +167,7 @@ SpriteAtlas:
     - 7bfe11eb840a9d342a8ec827749f6b42: -346521495
     - 7bfe11eb840a9d342a8ec827749f6b42: -301302843
     - 5b29a21cd28329e4aaf41569720e098c: 21300000
+    - a368012c0ef752742900ba54de2cd36d: 21300000
     - 022e429c8b842f84eadab8639ca5fc67: 233612735
     - 022e429c8b842f84eadab8639ca5fc67: -1872232579
     - 022e429c8b842f84eadab8639ca5fc67: 955378399
@@ -309,6 +310,7 @@ SpriteAtlas:
   - {fileID: -346521495, guid: 7bfe11eb840a9d342a8ec827749f6b42, type: 3}
   - {fileID: -301302843, guid: 7bfe11eb840a9d342a8ec827749f6b42, type: 3}
   - {fileID: 21300000, guid: 5b29a21cd28329e4aaf41569720e098c, type: 3}
+  - {fileID: 21300000, guid: a368012c0ef752742900ba54de2cd36d, type: 3}
   - {fileID: 233612735, guid: 022e429c8b842f84eadab8639ca5fc67, type: 3}
   - {fileID: -1872232579, guid: 022e429c8b842f84eadab8639ca5fc67, type: 3}
   - {fileID: 955378399, guid: 022e429c8b842f84eadab8639ca5fc67, type: 3}
@@ -450,6 +452,7 @@ SpriteAtlas:
   - smokeSprites_7
   - smokeSprites_6
   - bossBarTop
+  - titleScreenButton
   - knightRun_2
   - knightRun_3
   - knightRun_0
