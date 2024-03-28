@@ -12,7 +12,7 @@ public class Chest : MonoBehaviour
     private Transform _player;
     [SerializeField] private UnityEvent _onOpen;
 
-    [SerializeField] private ItemData _item;
+    [SerializeField] private LootTable lootTable;
 
     private void Start()
     {
@@ -48,6 +48,6 @@ public class Chest : MonoBehaviour
         enabled = false;
         GetComponent<Collider2D>().enabled = false;
 
-        if (_item != null) InventoryManager.i.AddItem(_item);
+        if (lootTable != null) InventoryManager.i.AddItem(lootTable.GetRandomItem());
     }
 }
