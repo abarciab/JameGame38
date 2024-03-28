@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AltMusic
   m_EditorClassIdentifier: 
   clips:
-  - name: dragon1BattleMusic
-    clip: {fileID: 8300000, guid: 95d87ad78828b2a459f805aeb1353aa8, type: 3}
+  - name: combat_theme
+    clip: {fileID: 8300000, guid: b393aef6b2f7cf44896aa7ce013e063d, type: 3}
     looping: 1
     CustomPitchAndVolume: 0
     volume: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   type: 1
   SynchronizePitchAndVolume: 1
   pitch: 1
-  volume: 0.249
+  volume: 0.8
   unpauseable: 0
   randomizePitch: 0
   pitchRandomizeAmount: 0

@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
 
     [Header("Inventory")]
     [SerializeField] private List<ItemSlot> _itemSlots = new List<ItemSlot>();
+    [SerializeField] private TextMeshProUGUI _newItemName;
+    [SerializeField] private TextMeshProUGUI _newItemDescription;
+    [SerializeField] private TextMeshProUGUI _newItemQuote;
     [HideInInspector] public int MaxItems => _itemSlots.Count;
 
     private void Start()
@@ -84,5 +87,12 @@ public class UIManager : MonoBehaviour
         TimeSpan timeSpan = TimeSpan.FromSeconds(seconds); 
         string timeText = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
         _timerText.text = timeText;
+    }
+
+    public void DisplayNewItemScreen(ItemData newItem)
+    {
+        _newItemName.text = newItem.Name;
+        _newItemDescription.text = newItem.Description;
+        _newItemQuote.text = '"' + newItem.Quote + '"';
     }
 }

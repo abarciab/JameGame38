@@ -1,6 +1,7 @@
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -14,6 +15,7 @@ public class Dragon : MonoBehaviour
     [SerializeField] private string _fireballAnimTriggerString = "Fireball";
     [SerializeField] private int _numFireballs = 3;
     [SerializeField] private GameObject _fireballPrefab;
+    [SerializeField] private float _fireballForceMin;
     [SerializeField] private float _fireballForce;
     [SerializeField] private Vector2 _firePoint;
     [SerializeField] private float _shootResetTime;
@@ -25,6 +27,7 @@ public class Dragon : MonoBehaviour
     [SerializeField] private GameObject _fireRainPrefab;
     [SerializeField] private List<Transform> _fireRainCenters = new List<Transform>();
     [SerializeField] private Transform _topPos;
+    [SerializeField] private float _minRainSpeed;
     [SerializeField] private float _fireRainSpeed;
     [SerializeField] private float _fireRainCount;
     [SerializeField] private float _fireRainStep;
@@ -38,24 +41,40 @@ public class Dragon : MonoBehaviour
     [SerializeField] private Light2D _fireBreathLight;
     [SerializeField] private ParticleSystem _breathParticleSystem;
     [SerializeField] private DragonFireBreathCollider _breathCollider;
+    [SerializeField] private Transform _firebreathParent;
+    private Vector3 _fireBreathStartRot;
 
     [Header("References")]
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _smokeParticles;
 
     [Header("Sounds")]
     [SerializeField] private Sound _wakeSound;
     [SerializeField] private Sound _hurtSound;
+    [SerializeField] private Sound _disapearSound;
+    [SerializeField] private Sound _reapearSound;
+    [SerializeField] private Sound _flameLoop;
+    [SerializeField] private Sound _summonSmall;
+    [SerializeField] private Sound _summonBig;
 
     private PlayerStats _player;
     private bool _busy;
     private bool _aggro;
     private int _originalLayer;
+    private int _smokeCount = 250;
 
     private void Start()
     {
+        _fireBreathStartRot = _firebreathParent.transform.localEulerAngles;
+
         _originalLayer = gameObject.layer;
         _wakeSound = Instantiate(_wakeSound);
         _hurtSound = Instantiate(_hurtSound);
+        _disapearSound = Instantiate(_disapearSound);
+        _reapearSound = Instantiate(_reapearSound);
+        _flameLoop = Instantiate(_flameLoop);
+        _summonSmall = Instantiate(_summonSmall);
+        _summonBig = Instantiate(_summonBig);
 
         _player = GameManager.i.Player;
         GetComponent<EnemyStats>().OnHealthChange.AddListener(TakeDamage);
@@ -69,16 +88,24 @@ public class Dragon : MonoBehaviour
 
     private void TakeDamage(float value)
     {
-        if (GetComponent<EnemyStats>().HealthPercent() > 0.99f) return;
+        if (_busy || GetComponent<EnemyStats>().HealthPercent() > 0.99f) return;
 
         _hurtSound.Play();
         StopAllCoroutines();
-        ChangePhase(Random.Range(2, 4));
+        StartCoroutine(WaitThenChangePhase());
+    }
+
+    private IEnumerator WaitThenChangePhase()
+    {
+        _busy = true;
+        yield return new WaitForSeconds(PhaseChangeTime());
+        _busy = false;
+        ChangePhase(Random.Range(2, 4), transform);
     }
 
     public void Activate()
     {
-        print("Awake");
+        _flameLoop.PlaySilent();
         _wakeSound.Play();
         _aggro = true;
         GameManager.i.FightingDragon = true;
@@ -90,6 +117,7 @@ public class Dragon : MonoBehaviour
         transform.position = _lowPos.position;
         transform.localEulerAngles = Vector3.zero;
         _animator.SetTrigger("Wake");
+        FindObjectOfType<CameraShake>().Shake(0.2f, 0.1f);
     }
 
     private void Update()
@@ -122,7 +150,16 @@ public class Dragon : MonoBehaviour
     private IEnumerator DoPhase2Behavior()
     {
         _busy = true;
-        transform.position = _topPos.position;
+
+        bool moved = SetPosition(_topPos.position);
+        if (moved) {
+            SetVisible(false);
+            yield return new WaitForSeconds(0.8f * GetComponent<EnemyStats>().HealthPercent());
+            _smokeParticles.Emit(_smokeCount);
+            yield return new WaitForSeconds(0.05f);
+            SetVisible(true);
+        }
+
         yield return new WaitForSeconds(0.5f);
         _animator.SetTrigger(_fireRainAnimTriggerString);
     }
@@ -131,20 +168,52 @@ public class Dragon : MonoBehaviour
     {
         _busy = true;
         bool left = Random.Range(0, 1f) > 0.5f;
-        transform.position = left ? _leftTopPerch.position : _rightTopPerch.position;
+
+        var pos = left ? _leftTopPerch.position : _rightTopPerch.position;
+
+        bool moved = SetPosition(pos);
+        if (moved) {
+            SetVisible(false);
+            yield return new WaitForSeconds(0.8f * GetComponent<EnemyStats>().HealthPercent());
+            _smokeParticles.Emit(_smokeCount);
+            yield return new WaitForSeconds(0.05f);
+            SetVisible(true);
+        }
+
         transform.localEulerAngles = new Vector3(0, left ? 0 : 180, 0);
         yield return new WaitForSeconds(1.2f);
         _animator.SetTrigger(_fireBreathAnimTriggerString);
         _animator.SetBool(_fireBreathLoopAnimString, true);
     }
 
-    private void ChangePhase(int newPhase)
+    private void SetVisible(bool state)
     {
+        _animator.GetComponent<SpriteRenderer>().enabled = state;
+        GetComponentInChildren<Light2D>().enabled = state;
+        if (state) _reapearSound.Play();
+        else _disapearSound.Play();
+    }
+
+    private void ChangePhase(int newPhase, bool damaged = false)
+    {
+        StopAllCoroutines();
         _busy = false;
+
+        if (_currentPhase != 1 && !damaged) newPhase = CheckExtraFireball(newPhase);
+
         _currentPhase = newPhase;
         if (_currentPhase == 1) ResetPhase1();
         //if (_currentPhase == 2) ResetPhase2();
         //if (_currentPhase == 3) ResetPhase3();
+    }
+
+    private int CheckExtraFireball(int current)
+    {
+        var percent = GetComponent<EnemyStats>().HealthPercent();
+        if (percent > .75f) return Random.Range(0, 1f) > 0.2f ? 1: current;
+        if (percent > .5f) return Random.Range(0, 1f) > 0.5f ? 1 : current;
+        if (percent > .25f) return Random.Range(0, 1f) > 0.9f ? 1 : current;
+        return current;
     }
 
     public void DoAttack()
@@ -154,31 +223,71 @@ public class Dragon : MonoBehaviour
         if (_currentPhase == 3) StartCoroutine(BreatheFire());
     }
 
+    private bool SetPosition(Vector3 Pos)
+    {
+        var dist = Vector3.Distance(transform.position, Pos);
+        if (dist <= 0.1f) return false;
+
+        _smokeParticles.Emit(_smokeCount);
+        transform.position = Pos;
+        FindObjectOfType<CameraShake>().Shake(0.1f, 0.1f);
+        return true;
+    }
+
     private IEnumerator BreatheFire()
     {
+        float variance = 8;
+        _firebreathParent.transform.localEulerAngles = _fireBreathStartRot + Vector3.forward * Random.Range(-variance, variance);
+
+        var shake = FindObjectOfType<CameraShake>();
+
         _fireBreathLight.enabled = true;
         _breathParticleSystem.Play();
+        shake.Shake(0.1f, 0.2f);
+        StartCoroutine(LerpFireSound(0.5f, 1, 0));
         yield return new WaitForSeconds(1.2f);
+        shake.Shake(0.1f, 0.2f);
         _breathCollider.Checking = true;
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(1.5f * GetComponent<EnemyStats>().HealthPercent() + 0.2f);
+        shake.Shake(0.1f, 0.2f);
+        _flameLoop.PercentVolume(0);
         _breathParticleSystem.Stop();
         _fireBreathLight.enabled = false;
         yield return new WaitForSeconds(0.1f);
         _breathCollider.Checking = false;
         _animator.SetBool(_fireBreathLoopAnimString, false);
-        yield return new WaitForSeconds(0.4f);
+
+        yield return new WaitForSeconds(PhaseChangeTime());
         ChangePhase(Random.Range(1, 3));
+    }
+
+    private IEnumerator LerpFireSound(float time, float targetVol, float startVol)
+    {
+        float timePassed = 0;
+        while (timePassed < time) {
+            timePassed += Time.deltaTime;
+            float progress = timePassed / time;
+            _flameLoop.PercentVolume(Mathf.Lerp(startVol, targetVol, progress));
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private IEnumerator RainFire()
     {
+        _summonBig.Play();
         gameObject.layer = 3;
 
         var fireDir = GetFireDir();
         List<Vector3> dirs = GetOffsetDir( (int) fireDir.x);
 
-        for (int i = 0; i < _fireRainCount / 2; i++) {
-            var pos = _fireRainCenters[(int)fireDir.x].position;
+        int count = Mathf.RoundToInt(_fireRainCount * (1 - GetComponent<EnemyStats>().HealthPercent()));
+        count = Mathf.Max(2, count);
+
+        float val = 3;
+        Vector2 randomOffset = new Vector2(Random.Range(-val, val), Random.Range(-val, val));
+
+        for (int i = 0; i < count / 2; i++) {
+            var pos = _fireRainCenters[(int)fireDir.x].position + (Vector3) randomOffset;
             var offset = i * _fireRainStep;
 
             var fireBall = Instantiate(_fireRainPrefab, pos + dirs[0] * offset, Quaternion.identity);
@@ -189,15 +298,20 @@ public class Dragon : MonoBehaviour
             yield return new WaitForSeconds(.25f);
         }
 
-        yield return new WaitForSeconds(0.7f);
-
+        yield return new WaitForSeconds(PhaseChangeTime());
         ChangePhase(Random.Range(1, 4));
     }
 
     private void Configure(Transform fireBall, Vector4 fireDir)
     {
-        fireBall.GetComponent<Rigidbody2D>().velocity = new Vector2(fireDir.y, fireDir.z) * _fireRainSpeed;
+        fireBall.GetComponent<Rigidbody2D>().velocity = new Vector2(fireDir.y, fireDir.z) * GetFireRainSpeed();
         fireBall.localEulerAngles = new Vector3(0, 0, fireDir.w);
+    }
+
+    private float GetFireRainSpeed()
+    {
+        var percent = GetComponent<EnemyStats>().HealthPercent();
+        return Mathf.Lerp(_minRainSpeed, _fireRainSpeed, 1 - percent);
     }
 
     private List<Vector3> GetOffsetDir(int dir)
@@ -208,15 +322,31 @@ public class Dragon : MonoBehaviour
 
     private Vector4 GetFireDir()
     {
-        int dir = Random.Range(0, 4);
+        int dir = GetFireDirIndexByDifficulty();
         if (dir == 0) return new Vector4(0, 0, -1, 0);
         if (dir == 1) return new Vector4(1, -1, 0, 270);
         if (dir == 2) return new Vector4(2, 0, 1, 180);
         else return new Vector4(3, 1, 0, 90);
     }
 
+    private float PhaseChangeTime()
+    {
+        var percent = GetComponent<EnemyStats>().HealthPercent();
+        return percent;
+    }
+
+    private int GetFireDirIndexByDifficulty()
+    {
+        var percent = GetComponent<EnemyStats>().HealthPercent();
+        if (percent > .75f) return 0;
+        if (percent > .5f) return Random.Range(0, 2);
+        if (percent > .25f) return Random.Range(0, 3);
+        return Random.Range(0, 4);
+    }
+
     private IEnumerator ShootFireball()
     {
+        _summonSmall.Play();
         _shootCooldown = _shootResetTime;
         var pos = transform.TransformPoint((Vector3)_firePoint);
 
@@ -226,11 +356,13 @@ public class Dragon : MonoBehaviour
 
         var playerPos = _player.transform.position + ((Vector3)_player.GetComponent<Rigidbody2D>().velocity/2);
         var dir = (playerPos - pos).normalized;
-        fireBallRb.velocity = dir * _fireballForce;
+
+        var speed = Mathf.Lerp(_fireballForceMin, _fireballForce, 1 - GetComponent<EnemyStats>().HealthPercent());
+        fireBallRb.velocity = dir * speed;
 
         _numFireballsShot += 1;
         if (_numFireballsShot >= _numFireballs) {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(PhaseChangeTime());
             ChangePhase(Random.Range(2, 4));
         }
 

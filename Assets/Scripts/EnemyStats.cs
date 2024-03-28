@@ -7,12 +7,15 @@ public class EnemyStats : MonoBehaviour, IDamagable, IHealth
 {
     public float Health { get; private set; }
     public float MaxHealth;
+    [SerializeField] private bool _endGameOnDeath;
 
     [HideInInspector] public UnityEvent<float> OnHealthChange;
     public UnityEvent OnDie;
+    [SerializeField] private Sound _deathSound;
 
     private void Start()
     {
+        _deathSound = Instantiate(_deathSound);
         Health = MaxHealth;
         CallEvent();
     }
@@ -29,6 +32,8 @@ public class EnemyStats : MonoBehaviour, IDamagable, IHealth
         OnDie.Invoke();
         UIManager.i.HideBossBar();
         Destroy(gameObject);
+        if (_deathSound) _deathSound.Play();
+        if (_endGameOnDeath) GameManager.i.EndGame(4);
     }
 
     public void Heal(float amount)

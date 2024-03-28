@@ -203,14 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a15a6593662e8f4e9732908a707ae4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupPrompt: {fileID: 0}
   NearbyItems: []
-  highlightedItem: {fileID: 0}
-  itemTypes:
-  - {fileID: 11400000, guid: 775d82847bbd4d042a55d401bdfa9d8b, type: 2}
-  - {fileID: 11400000, guid: 57b397831c70b894db80f6aff08f27ca, type: 2}
-  - {fileID: 11400000, guid: b1e60114561a4ca43b0e796577eeb6ab, type: 2}
-  curItems: []
+  HighlightedItem: {fileID: 0}
+  _items: []
   emptyImage: {fileID: 21300000, guid: 15da565e643836e45b91415591093ec8, type: 3}
   slotPrefab: {fileID: 5507041349339843666, guid: 11bb7d3f0c8e71948aca3dc7d7af9684, type: 3}
   baseItemPrefab: {fileID: 6590080837320990807, guid: 407c0d471501f484ab7abe72456cae10, type: 3}
+  _pickupSound: {fileID: 11400000, guid: ea18663caef48a44da85ee98fe418eef, type: 2}
+  _useItemSound: {fileID: 11400000, guid: 9e6d96f1970dbb94d807ff01e41c700d, type: 2}

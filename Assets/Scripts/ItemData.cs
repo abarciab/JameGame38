@@ -11,6 +11,7 @@ public class ItemData : ScriptableObject
     [HideInInspector] public bool Used;
     public string Name;
     [TextArea (3, 10)]public string Description;
+    public string Quote;
     public Sprite Sprite;
     public ItemType Type;
     [ConditionalField(nameof(Type), false, ItemType.HealthPot), SerializeField] private float _healAmount; 

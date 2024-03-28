@@ -83,7 +83,7 @@ public class Fireball : MonoBehaviour
             if (damagable.AcceptDirectHits() && !_bounced || _bounced) damagable.Damage(Damage, transform);
             Kill(true);
         }
-        else {
+        else if (!(bounceData && !Bouncable)) {
             Kill();
         }
     }

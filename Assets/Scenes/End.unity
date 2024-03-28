@@ -640,7 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a03c4e32066fe4d975a943ec7f7434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMusic: {fileID: 11400000, guid: ffa2817c886bfef4fbed5061af9c81d9, type: 2}
+  mainMusic: {fileID: 11400000, guid: 57dfd28ceb471a6459623882a9575697, type: 2}
   altMusic: {fileID: 0}
   pauseMusic: {fileID: 0}
   ambientLoop: {fileID: 0}

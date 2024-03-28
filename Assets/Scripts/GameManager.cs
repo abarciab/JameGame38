@@ -64,14 +64,16 @@ public class GameManager : MonoBehaviour
     }
 
     [ButtonMethod]
-    public void EndGame()
+    public void EndGame(float waitTime = 0)
     {
         Resume();
-        StartCoroutine(FadeThenLoadScene(2));
+        StartCoroutine(FadeThenLoadScene(2, waitTime));
     }
 
-    IEnumerator FadeThenLoadScene(int num)
+    IEnumerator FadeThenLoadScene(int num, float extraWaitTime = 0)
     {
+        print("AHHH");
+        yield return new WaitForSeconds(extraWaitTime);
         fade.Appear(); 
         music.FadeOutCurrent(fade.fadeTime);
         yield return new WaitForSeconds(fade.fadeTime + 0.5f);

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e0513045be1974d934eb6431407da8, type: 3}
+  m_Name: titleMusic
+  m_EditorClassIdentifier: 
+  clips:
+  - name: menu_theme
+    clip: {fileID: 8300000, guid: a8835010aceafeb47b34b7b70d313e61, type: 3}
+    looping: 1
+    CustomPitchAndVolume: 0
+    volume: 0
+    pitch: 0
+  type: 1
+  SynchronizePitchAndVolume: 1
+  pitch: 1
+  volume: 1
+  unpauseable: 1
+  randomizePitch: 0
+  pitchRandomizeAmount: 0
+  audioSource: {fileID: 0}
+  instantialized: 0

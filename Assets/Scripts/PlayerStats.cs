@@ -45,7 +45,6 @@ public class PlayerStats : MonoBehaviour, IDamagable
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         yield return new WaitForEndOfFrame();
         GetComponent<Rigidbody2D>().velocity = kbForce;
-        print("added force: " + kbForce);
 
         var move = GetComponent<PlayerMovement>();
         move.Stunned = true;
