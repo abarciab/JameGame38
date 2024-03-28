@@ -172,6 +172,7 @@ MonoBehaviour:
   _knockbackforce: {x: 10, y: 5}
   _knockbackTime: 0.2
   _hurtSound: {fileID: 11400000, guid: 203ba92f539cb564cb6608bddc9b1a2b, type: 2}
+  _animator: {fileID: 2145744781839237968}
   MaxHealth: 100
 --- !u!1 &2382388544781089308
 GameObject:

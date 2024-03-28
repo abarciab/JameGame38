@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private Vector2 _knockbackforce;
     [SerializeField] private float _knockbackTime = 0.2f;
     [SerializeField] private Sound _hurtSound;
-
+    [SerializeField] private Animator _animator;
     public float Health { get; private set; }
     public float MaxHealth;
 
@@ -37,6 +37,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
         bool left = transform.position.x > source.position.x;
         var kbForce = new Vector2(_knockbackforce.x * (left ? 1 : -1), _knockbackforce.y);
         StartCoroutine(DamageCoroutine(kbForce));
+        _animator.SetTrigger("hurt");
     }
 
     private IEnumerator DamageCoroutine(Vector2 kbForce)

@@ -198,6 +198,10 @@ MonoBehaviour:
   _chestSprite: {fileID: 500237407952396096}
   _openChest: {fileID: 21300000, guid: 328adc210d3fad0448c1371f23cb4604, type: 3}
   _openSound: {fileID: 11400000, guid: 0303345d20376c04ab58e5d5c5e38fdb, type: 2}
+  _onOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  _item: {fileID: 0}
 --- !u!1 &6825550554773408804
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +390,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f1b367d25e3f3c943b989a6547d0a89a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

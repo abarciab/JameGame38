@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b59a479fb0f4a54bb92c362cb494df1
+guid: 5307abb3b081c7e499ebaf478095ad64
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -162,13 +162,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: knightHurt_0
+      name: dragonSleep_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 48
+        width: 128
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c332f446871cfb54ea0608fd8e84f5ff
-      internalID: 2115984938
+      spriteID: 7dc69fb61d0db904fb55f8c8ac5f9a7e
+      internalID: 557701155
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: knightHurt_1
+      name: dragonSleep_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 128
         y: 0
-        width: 32
-        height: 48
+        width: 128
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,8 +197,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9fe3e60e1eeea94daf00c5d1481193f
-      internalID: 307389023
+      spriteID: f75856e1ad3699840b9e662b5a66b47e
+      internalID: 781618116
       vertices: []
       indices: 
       edges: []
@@ -214,8 +214,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      knightHurt_0: 2115984938
-      knightHurt_1: 307389023
+      dragonSleep_0: 557701155
+      dragonSleep_1: 781618116
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

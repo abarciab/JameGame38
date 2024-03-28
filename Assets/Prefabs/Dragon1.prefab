@@ -433,17 +433,18 @@ MonoBehaviour:
   _currentPhase: 0
   _lowPos: {fileID: 0}
   _fireballAnimTriggerString: Fireball
-  _numFireballs: 4
+  _numFireballs: 2
   _fireballPrefab: {fileID: 3268620369244849916, guid: 791b8e6e5ccbce44caefd65cb3925b9e, type: 3}
   _fireballForce: 16
   _firePoint: {x: 5.66, y: 2.8}
   _shootResetTime: 1.4
   _fireRainAnimTriggerString: Fire rain
   _fireRainPrefab: {fileID: 3268620369244849916, guid: 69e8f77f959d5ac4b80fcb120201a839, type: 3}
-  _fireRainCenter: {fileID: 0}
+  _fireRainCenters: []
   _topPos: {fileID: 0}
-  _fireRainCount: 15
-  _fireRainStep: 4
+  _fireRainSpeed: 0
+  _fireRainCount: 13
+  _fireRainStep: 5
   _fireBreathAnimTriggerString: Fire breath
   _fireBreathLoopAnimString: Fire breath loop
   _leftTopPerch: {fileID: 0}
@@ -499,19 +500,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.7623444, y: 1.4090778}
-      - {x: 3.1089993, y: 3.0055175}
+    - - {x: 4.2513185, y: 0.508766}
+      - {x: 4.424838, y: 1.9320687}
       - {x: 4.891678, y: 3.033691}
       - {x: 4.2787285, y: 4.0349073}
       - {x: 2.1256027, y: 4.3087482}
-      - {x: 2.1273727, y: 3.2720075}
-      - {x: 1.5561352, y: 1.4089576}
-      - {x: -0.7614193, y: 1.3051229}
+      - {x: 0.29212835, y: 3.8260455}
+      - {x: -1.1794235, y: 3.140327}
+      - {x: -2.5966694, y: 2.2054346}
       - {x: -2.7634745, y: 0.7338027}
       - {x: -3.4763293, y: -0.41255033}
-      - {x: -2.6689057, y: -1.0355694}
-      - {x: 3.2395248, y: -1.0787247}
-      - {x: 3.188262, y: 0.054145753}
+      - {x: -2.868017, y: -0.8183557}
+      - {x: 3.1010168, y: -0.8363329}
+      - {x: 4.12793, y: -0.8414413}
   m_UseDelaunayMesh: 0
 --- !u!114 &583825127299118420
 MonoBehaviour:
@@ -525,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789fe3f55aa20ed42917497966cf9bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 50
+  MaxHealth: 80
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []

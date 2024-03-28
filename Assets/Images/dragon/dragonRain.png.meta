@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b59a479fb0f4a54bb92c362cb494df1
+guid: ce47012667169844baff5c5beeb8ac67
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -162,13 +162,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: knightHurt_0
+      name: dragonRain_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 48
+        width: 128
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c332f446871cfb54ea0608fd8e84f5ff
-      internalID: 2115984938
+      spriteID: d53c61b02c2751448975ce3b80cde2c1
+      internalID: -896072717
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: knightHurt_1
+      name: dragonRain_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 128
         y: 0
-        width: 32
-        height: 48
+        width: 128
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,8 +197,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9fe3e60e1eeea94daf00c5d1481193f
-      internalID: 307389023
+      spriteID: c32154b3204f9e344b7b9b66744b4f9d
+      internalID: 2115851869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dragonRain_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18df062e589e25c4f83f488a12e03d18
+      internalID: -304571750
       vertices: []
       indices: 
       edges: []
@@ -214,8 +235,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      knightHurt_0: 2115984938
-      knightHurt_1: 307389023
+      dragonRain_0: -896072717
+      dragonRain_1: 2115851869
+      dragonRain_2: -304571750
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

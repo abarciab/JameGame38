@@ -23,12 +23,13 @@ public class SwingingAxe : MonoBehaviour
     {
         var progress = (_currentValue - _minMaxZ.x) / (_minMaxZ.y - _minMaxZ.x);
         if (!_goingRight) progress = 1 - progress;
-        float speed = _speedCurve.Evaluate(progress) * _maxSpeed;
+        float speed = _speedCurve.Evaluate(progress) * _maxSpeed + 10f;
 
         var delta = speed * Time.deltaTime * (_goingRight ? 1 : -1);
         _currentValue += delta;
 
-        _axePivot.transform.localEulerAngles += Vector3.forward * delta; 
-        if (_currentValue < _minMaxZ.x || _currentValue > _minMaxZ.y) _goingRight = !_goingRight;
+        _axePivot.transform.localEulerAngles += Vector3.forward * delta;
+        if (_currentValue < _minMaxZ.x) _goingRight = true;
+        if (_currentValue > _minMaxZ.y) _goingRight = false;
     }
 }

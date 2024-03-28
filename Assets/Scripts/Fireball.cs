@@ -1,7 +1,9 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class Fireball : MonoBehaviour
@@ -17,6 +19,11 @@ public class Fireball : MonoBehaviour
     [SerializeField] private ParticleSystem _trail;
     [SerializeField] private float _deathTime = 5;
 
+    [SerializeField] private bool _lifeTimeDeathOnly;
+    [SerializeField, ConditionalField(nameof(_lifeTimeDeathOnly))] private float _lifeTime = 20;
+    bool _killed;
+    [SerializeField] private UnityEvent OnCollide;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -31,6 +38,9 @@ public class Fireball : MonoBehaviour
 
     private void Update()
     {
+        _lifeTime -= Time.deltaTime;
+        if (_lifeTimeDeathOnly && _lifeTime <= 0) Kill();
+
         if (!Homing || !_target) return;
         var dir = (Vector2)(_target.position - transform.position);
         float dist = dir.magnitude;
@@ -71,15 +81,18 @@ public class Fireball : MonoBehaviour
         }
         else if (damagable != null) {
             if (damagable.AcceptDirectHits() && !_bounced || _bounced) damagable.Damage(Damage, transform);
-            Kill();
+            Kill(true);
         }
         else {
             Kill();
         }
     }
 
-    private void Kill()
+    private void Kill(bool damaged = false)
     {
+        if (_killed || (_lifeTimeDeathOnly && !damaged && _lifeTime > 0)) return;
+
+        _killed = true;
         GetComponent<Collider2D>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -87,6 +100,7 @@ public class Fireball : MonoBehaviour
         var light = GetComponentInChildren<Light2D>();
         if (light) light.enabled = false;
         if (_trail) _trail.Stop();
+        OnCollide.Invoke();
 
         Invoke(nameof(Destroy), _deathTime);
     }

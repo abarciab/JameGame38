@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b59a479fb0f4a54bb92c362cb494df1
+guid: 185f2d493f81fe849b6532b82c4d62bc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -162,13 +162,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: knightHurt_0
+      name: dragonFireball_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 48
+        width: 128
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c332f446871cfb54ea0608fd8e84f5ff
-      internalID: 2115984938
+      spriteID: 2a7182ac9dc7b0b40820d5a2c891d052
+      internalID: -139945769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: knightHurt_1
+      name: dragonFireball_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 128
         y: 0
-        width: 32
-        height: 48
+        width: 128
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,8 +197,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9fe3e60e1eeea94daf00c5d1481193f
-      internalID: 307389023
+      spriteID: a3b9d9433465b9d42ab357791c5fa45b
+      internalID: 1217996050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dragonFireball_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df99664fb1f21d14a8ea19c6ddf5f996
+      internalID: 1422354253
       vertices: []
       indices: 
       edges: []
@@ -214,8 +235,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      knightHurt_0: 2115984938
-      knightHurt_1: 307389023
+      dragonFireball_0: -139945769
+      dragonFireball_1: 1217996050
+      dragonFireball_2: 1422354253
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

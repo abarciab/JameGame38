@@ -9,7 +9,7 @@ public class ArrowShooter : MonoBehaviour
     [SerializeField] private float _shootResetTime;
     [SerializeField] private float _shootSpeed;
     [SerializeField] private Vector2 _shootOffset;
-    private float _shootCooldown;
+    [SerializeField] private float _shootCooldown;
 
     private void Update()
     {

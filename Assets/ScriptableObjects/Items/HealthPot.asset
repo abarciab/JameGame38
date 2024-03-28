@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1839201590d85042b23162822a9c3de, type: 3}
   m_Name: HealthPot
   m_EditorClassIdentifier: 
-  itemName: Health Potion
-  itemDescription: It's got electrolytes!
-  itemImage: {fileID: 21300000, guid: e6ef7c0f93ab42a409794b387f4a89ef, type: 3}
-  itemType: 0
+  Used: 0
+  Name: Health Potion
+  Description: Drink to heal yourself and cure your injuries
+  Sprite: {fileID: 21300000, guid: 1a04b6bae881d3d4887651d390e238cd, type: 3}
+  Type: 0
+  _healAmount: 30

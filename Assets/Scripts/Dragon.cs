@@ -23,8 +23,9 @@ public class Dragon : MonoBehaviour
     [Header("Attack2 - fire rain")]
     [SerializeField] private string _fireRainAnimTriggerString = "Fire rain";
     [SerializeField] private GameObject _fireRainPrefab;
-    [SerializeField] private Transform _fireRainCenter;
+    [SerializeField] private List<Transform> _fireRainCenters = new List<Transform>();
     [SerializeField] private Transform _topPos;
+    [SerializeField] private float _fireRainSpeed;
     [SerializeField] private float _fireRainCount;
     [SerializeField] private float _fireRainStep;
 
@@ -48,9 +49,11 @@ public class Dragon : MonoBehaviour
     private PlayerStats _player;
     private bool _busy;
     private bool _aggro;
+    private int _originalLayer;
 
     private void Start()
     {
+        _originalLayer = gameObject.layer;
         _wakeSound = Instantiate(_wakeSound);
         _hurtSound = Instantiate(_hurtSound);
 
@@ -86,6 +89,7 @@ public class Dragon : MonoBehaviour
         AudioManager.i.GetComponent<MusicPlayer>().playAltMusic = true;
         transform.position = _lowPos.position;
         transform.localEulerAngles = Vector3.zero;
+        _animator.SetTrigger("Wake");
     }
 
     private void Update()
@@ -111,6 +115,7 @@ public class Dragon : MonoBehaviour
         if (_shootCooldown <= 0) {
             _busy = true;
             _animator.SetTrigger(_fireballAnimTriggerString);
+            gameObject.layer = _originalLayer;
         }
     }
 
@@ -167,21 +172,47 @@ public class Dragon : MonoBehaviour
 
     private IEnumerator RainFire()
     {
-        int originalLayer = gameObject.layer;
         gameObject.layer = 3;
 
+        var fireDir = GetFireDir();
+        List<Vector3> dirs = GetOffsetDir( (int) fireDir.x);
+
         for (int i = 0; i < _fireRainCount / 2; i++) {
-            var pos = _fireRainCenter.position;
+            var pos = _fireRainCenters[(int)fireDir.x].position;
             var offset = i * _fireRainStep;
-            Instantiate(_fireRainPrefab, pos + Vector3.left * offset, Quaternion.identity);
-            if (i > 0) Instantiate(_fireRainPrefab, pos + Vector3.right * offset, Quaternion.identity);
-            yield return new WaitForSeconds(.15f);
+
+            var fireBall = Instantiate(_fireRainPrefab, pos + dirs[0] * offset, Quaternion.identity);
+            Configure(fireBall.transform, fireDir);
+            if (i > 0) fireBall = Instantiate(_fireRainPrefab, pos + dirs[1] * offset, Quaternion.identity);
+            Configure(fireBall.transform, fireDir);
+
+            yield return new WaitForSeconds(.25f);
         }
 
         yield return new WaitForSeconds(0.7f);
-        gameObject.layer = originalLayer;
 
         ChangePhase(Random.Range(1, 4));
+    }
+
+    private void Configure(Transform fireBall, Vector4 fireDir)
+    {
+        fireBall.GetComponent<Rigidbody2D>().velocity = new Vector2(fireDir.y, fireDir.z) * _fireRainSpeed;
+        fireBall.localEulerAngles = new Vector3(0, 0, fireDir.w);
+    }
+
+    private List<Vector3> GetOffsetDir(int dir)
+    {
+        if (dir == 0 || dir == 2) return new List<Vector3>() { Vector3.left, Vector3.right };
+        else return new List<Vector3>() { Vector3.up, Vector3.down };
+    }
+
+    private Vector4 GetFireDir()
+    {
+        int dir = Random.Range(0, 4);
+        if (dir == 0) return new Vector4(0, 0, -1, 0);
+        if (dir == 1) return new Vector4(1, -1, 0, 270);
+        if (dir == 2) return new Vector4(2, 0, 1, 180);
+        else return new Vector4(3, 1, 0, 90);
     }
 
     private IEnumerator ShootFireball()
