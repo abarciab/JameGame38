@@ -117,6 +117,9 @@ SpriteAtlas:
     - b874bf5635177984d8037a19570b8d79: 21300000
     - d8d840d6725f98c42a569c3f089db5cf: 21300000
     - 5e8c32d6742bcf9428d6419ae52aab9a: 21300000
+    - 5b9645f6ac7d84741a2bd34db64ec6b2: -412268726
+    - 5b9645f6ac7d84741a2bd34db64ec6b2: 1511525724
+    - 5b9645f6ac7d84741a2bd34db64ec6b2: 1176267207
     - fe18d9773a4bae64987bc1ded9edf0f3: 21300000
     - 41dd0b8777e988741bf2fd9edff31897: -1011038223
     - 41dd0b8777e988741bf2fd9edff31897: 1060516387
@@ -236,6 +239,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b874bf5635177984d8037a19570b8d79, type: 3}
   - {fileID: 21300000, guid: d8d840d6725f98c42a569c3f089db5cf, type: 3}
   - {fileID: 21300000, guid: 5e8c32d6742bcf9428d6419ae52aab9a, type: 3}
+  - {fileID: -412268726, guid: 5b9645f6ac7d84741a2bd34db64ec6b2, type: 3}
+  - {fileID: 1511525724, guid: 5b9645f6ac7d84741a2bd34db64ec6b2, type: 3}
+  - {fileID: 1176267207, guid: 5b9645f6ac7d84741a2bd34db64ec6b2, type: 3}
   - {fileID: 21300000, guid: fe18d9773a4bae64987bc1ded9edf0f3, type: 3}
   - {fileID: -1011038223, guid: 41dd0b8777e988741bf2fd9edff31897, type: 3}
   - {fileID: 1060516387, guid: 41dd0b8777e988741bf2fd9edff31897, type: 3}
@@ -354,6 +360,9 @@ SpriteAtlas:
   - item3
   - healthBar
   - itemSlotBacking
+  - dragonIdle_1
+  - dragonIdle_0
+  - dragonIdle_2
   - axe_handle_full
   - knightFall_0
   - knightFall_1

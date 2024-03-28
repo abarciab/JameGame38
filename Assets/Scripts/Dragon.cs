@@ -58,6 +58,11 @@ public class Dragon : MonoBehaviour
         GetComponent<EnemyStats>().OnDie.AddListener(() => AudioManager.i.GetComponent<MusicPlayer>().playAltMusic = false);
     }
 
+    [ButtonMethod] private void SetTopPos() => _topPos.position = transform.position;
+    [ButtonMethod] private void SetLeftPos() => _leftTopPerch.position = transform.position;
+    [ButtonMethod] private void SetRightPos() => _rightTopPerch.position = transform.position;
+    [ButtonMethod] private void SetLowPos() => _lowPos.position = transform.position;
+
     private void TakeDamage(float value)
     {
         if (GetComponent<EnemyStats>().HealthPercent() > 0.99f) return;
