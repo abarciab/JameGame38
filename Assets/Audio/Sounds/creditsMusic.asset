@@ -15,7 +15,7 @@ MonoBehaviour:
   clips:
   - name: credits_theme
     clip: {fileID: 8300000, guid: a167ea0744f139942adac1ec18925026, type: 3}
-    looping: 0
+    looping: 1
     CustomPitchAndVolume: 0
     volume: 0
     pitch: 0

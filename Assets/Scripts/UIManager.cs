@@ -1,3 +1,4 @@
+using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,10 +25,15 @@ public class UIManager : MonoBehaviour
 
     [Header("Inventory")]
     [SerializeField] private List<ItemSlot> _itemSlots = new List<ItemSlot>();
+    [SerializeField] private GameObject _newItemParent;
+    [SerializeField] private GameObject _keepButton;
     [SerializeField] private TextMeshProUGUI _newItemName;
+    [SerializeField] private Image _newItemSprite;
     [SerializeField] private TextMeshProUGUI _newItemDescription;
     [SerializeField] private TextMeshProUGUI _newItemQuote;
     [HideInInspector] public int MaxItems => _itemSlots.Count;
+
+    [SerializeField, ReadOnly] private ItemData _newItem;
 
     private void Start()
     {
@@ -89,10 +95,37 @@ public class UIManager : MonoBehaviour
         _timerText.text = timeText;
     }
 
-    public void DisplayNewItemScreen(ItemData newItem)
+    public void DisplayNewItemScreen(ItemData newItem, List<ItemData> items)
     {
+        if (newItem == null) return;
+
+        _newItem = newItem;
+        _newItem.Used = false;
+
+        _newItemParent.SetActive(true);
         _newItemName.text = newItem.Name;
+        _newItemSprite.sprite = newItem.Sprite;
         _newItemDescription.text = newItem.Description;
         _newItemQuote.text = '"' + newItem.Quote + '"';
+
+        _keepButton.SetActive(items.Count < MaxItems);
     }
+
+    public void KeepButtonPress()
+    {
+        InventoryManager.i.ActuallyAddItem(_newItem);
+        _newItemParent.SetActive(false);
+    }
+
+    public void UseItemButton()
+    {
+        _newItemParent.SetActive(false);
+        _newItem.Use();
+    }
+
+    public void TossItemButton()
+    {
+        _newItemParent.SetActive(false);
+    }
+
 }

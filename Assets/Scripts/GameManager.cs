@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator FadeThenLoadScene(int num, float extraWaitTime = 0)
     {
-        print("AHHH");
         yield return new WaitForSeconds(extraWaitTime);
         fade.Appear(); 
         music.FadeOutCurrent(fade.fadeTime);

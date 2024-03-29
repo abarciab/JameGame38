@@ -104,9 +104,11 @@ public class AudioManager : MonoBehaviour
 
     void SetMixerVolumes()
     {
-        mixer.SetFloat("masterVolume", Mathf.Log10(masterVolume) * 20);
-        mixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolume) * 20);
-        mixer.SetFloat("musicVolume", Mathf.Log10(musicVolume) * 20);
+        float max = 20;
+
+        mixer.SetFloat("masterVolume", Mathf.Log10(masterVolume) * max);
+        mixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolume) * max);
+        mixer.SetFloat("musicVolume", Mathf.Log10(musicVolume) * max);
 
         SaveVolume();
     }

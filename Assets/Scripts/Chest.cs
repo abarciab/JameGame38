@@ -48,6 +48,6 @@ public class Chest : MonoBehaviour
         enabled = false;
         GetComponent<Collider2D>().enabled = false;
 
-        if (lootTable != null) InventoryManager.i.AddItem(lootTable.GetRandomItem());
+        if (lootTable != null) InventoryManager.i.StartAddItem(lootTable.GetRandomItem());
     }
 }

@@ -188,6 +188,7 @@ public class Dragon : MonoBehaviour
 
     private void SetVisible(bool state)
     {
+        GetComponent<Collider2D>().enabled = state;
         _animator.GetComponent<SpriteRenderer>().enabled = state;
         GetComponentInChildren<Light2D>().enabled = state;
         if (state) _reapearSound.Play();
@@ -196,6 +197,7 @@ public class Dragon : MonoBehaviour
 
     private void ChangePhase(int newPhase, bool damaged = false)
     {
+        SetVisible(true);
         StopAllCoroutines();
         _busy = false;
 

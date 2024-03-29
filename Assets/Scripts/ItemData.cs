@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { HealthPot, DodgeCrystal, Spear }
+public enum ItemType { HealthPot, MaxHealthPot, FullHealPot }
 
 [CreateAssetMenu(fileName = "NewItemType", menuName = "ItemType")]
 public class ItemData : ScriptableObject
@@ -14,13 +14,14 @@ public class ItemData : ScriptableObject
     public string Quote;
     public Sprite Sprite;
     public ItemType Type;
-    [ConditionalField(nameof(Type), false, ItemType.HealthPot), SerializeField] private float _healAmount; 
+    [ConditionalField(nameof(Type), false, ItemType.HealthPot, ItemType.MaxHealthPot), SerializeField] private float _healAmount; 
 
     public void Use()
     {
-        if (Used) return;
-
-        if (Type == ItemType.HealthPot) GameManager.i.Player.Heal(_healAmount);
-        // if (Type == ItemType.DodgeCrystal) GameManager.i.Player.Heal(_healAmount);
+        var player = GameManager.i.Player;
+        if (Type == ItemType.HealthPot) player.Heal(_healAmount);
+        if (Type == ItemType.MaxHealthPot) player.IncreaseMaxHealth(_healAmount);
+        if (Type == ItemType.FullHealPot) player.Heal(player.MaxHealth);
+        InventoryManager.i.PlayUseSound();
     }
 }

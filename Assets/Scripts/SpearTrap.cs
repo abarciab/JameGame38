@@ -14,6 +14,14 @@ public class SpearTrap : MonoBehaviour
     [SerializeField] private float _startTime;
     private float _cooldown;
 
+    [SerializeField] private Sound _raise;
+
+    public void Retract()
+    {
+        StopAllCoroutines();
+        _spears.position = _inPos;
+    }
+
     [ButtonMethod]
     private void SetOutPosition()
     {
@@ -22,6 +30,7 @@ public class SpearTrap : MonoBehaviour
 
     private void Start()
     {
+        _raise = Instantiate(_raise);
         _inPos = _spears.localPosition;
         _cooldown = _startTime;
     }
@@ -34,6 +43,7 @@ public class SpearTrap : MonoBehaviour
 
     private IEnumerator Animate()
     {
+        _raise.Play(transform);
         _spears.localPosition = _inPos;
         _cooldown = _interval + _animateTime;
         float timePassed = 0;

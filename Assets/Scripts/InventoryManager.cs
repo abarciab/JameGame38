@@ -39,7 +39,12 @@ public class InventoryManager : MonoBehaviour
         item.GetComponent<ItemObject>().Initialize(itemData);
     }
 
-    public void AddItem(ItemData itemData)
+    public void StartAddItem (ItemData itemData)
+    {
+        UIManager.i.DisplayNewItemScreen(itemData, _items);
+    }
+
+    public void ActuallyAddItem (ItemData itemData)
     {
         if (_items.Count >= maxItems) return;
 
@@ -55,8 +60,10 @@ public class InventoryManager : MonoBehaviour
         ItemData item = _items[index];
         item.Use();
         _items.RemoveAt(index);
-        _useItemSound.Play();
+        //_useItemSound.Play();
 
         UIManager.i.UpdateInventory(_items);
     }
+
+    public void PlayUseSound() => _useItemSound.Play();
 }

@@ -230,6 +230,7 @@ MonoBehaviour:
   _animateTime: 1
   _interval: 1.2
   _startTime: 1
+  _raise: {fileID: 11400000, guid: e447221672e0f6c4f9379bec8392618b, type: 2}
 --- !u!1 &7753857524463134244
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +381,8 @@ MonoBehaviour:
   _damage: 20
   _damagaTickTime: 0.3
   _deflectSound: {fileID: 11400000, guid: 1b1b7ec579de66742a3414cbf1086296, type: 2}
+  _immuneTime: 0.6
+  _immuneTimer: 0
 --- !u!1 &8040645708967865890
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour, IDamagable
     [SerializeField] private float _knockbackTime = 0.2f;
     [SerializeField] private Sound _hurtSound;
     [SerializeField] private Animator _animator;
+    public bool Invincible;
     public float Health { get; private set; }
     public float MaxHealth;
 
@@ -24,6 +25,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
 
     public void Damage(float amount)
     {
+        if (Invincible) return;
+
         FindObjectOfType<CameraShake>().ShakeFixed();
         Health = Mathf.Max(0, Health - amount);
         CallEvent();
@@ -33,6 +36,8 @@ public class PlayerStats : MonoBehaviour, IDamagable
 
     public void Damage(float amount, Transform source)
     {
+        if (Invincible) return;
+
         Damage(amount);
         bool left = transform.position.x > source.position.x;
         var kbForce = new Vector2(_knockbackforce.x * (left ? 1 : -1), _knockbackforce.y);
@@ -58,6 +63,12 @@ public class PlayerStats : MonoBehaviour, IDamagable
     {
         Health = Mathf.Min(MaxHealth, Health + amount);
         CallEvent();
+    }
+
+    public void IncreaseMaxHealth(float amount)
+    {
+        MaxHealth += amount;
+        Heal(Mathf.RoundToInt(amount/2));
     }
 
     private void CallEvent() => OnHealthChange.Invoke(Health / MaxHealth);

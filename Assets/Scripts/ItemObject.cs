@@ -36,7 +36,7 @@ public class ItemObject : MonoBehaviour
     private void Update()
     {
         if (_prompt.activeInHierarchy && Input.GetKeyDown(KeyCode.E)) {
-            InventoryManager.i.AddItem(_itemData);
+            InventoryManager.i.StartAddItem(_itemData);
             Destroy(gameObject);
         }
     }

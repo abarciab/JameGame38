@@ -273,7 +273,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2747091740201435736}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3594314517271933717}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: UseItemButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1428095288613437058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,9 +1063,12 @@ MonoBehaviour:
   - {fileID: 3648097666297062251}
   - {fileID: 6686871850295045865}
   - {fileID: 7268855854616794207}
-  _newItemName: {fileID: 0}
-  _newItemDescription: {fileID: 0}
-  _newItemQuote: {fileID: 0}
+  _newItemParent: {fileID: 2424454832928582198}
+  _keepButton: {fileID: 7882586290405478484}
+  _newItemName: {fileID: 534236949054965001}
+  _newItemSprite: {fileID: 2737760136345771051}
+  _newItemDescription: {fileID: 5967837041629915919}
+  _newItemQuote: {fileID: 5205472092726237823}
 --- !u!1 &3307450710444309932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2691,7 +2706,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STORE
+  m_text: KEEP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4780c2a9c03813b4aa15a04c679475df, type: 2}
   m_sharedMaterial: {fileID: -4449409949554670692, guid: 4780c2a9c03813b4aa15a04c679475df, type: 2}
@@ -2956,7 +2971,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4214067818504991696}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3594314517271933717}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: TossItemButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7234207011381473857
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,7 +3410,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5471769795909909105}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3594314517271933717}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: KeepButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8067493121866712074
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,7 +4085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DROP
+  m_text: TOSS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4780c2a9c03813b4aa15a04c679475df, type: 2}
   m_sharedMaterial: {fileID: -4449409949554670692, guid: 4780c2a9c03813b4aa15a04c679475df, type: 2}

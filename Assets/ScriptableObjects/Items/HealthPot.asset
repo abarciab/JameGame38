@@ -15,6 +15,7 @@ MonoBehaviour:
   Used: 0
   Name: Health Potion
   Description: Drink to heal yourself and cure your injuries
+  Quote: tastes like strawberries
   Sprite: {fileID: 21300000, guid: 1a04b6bae881d3d4887651d390e238cd, type: 3}
   Type: 0
   _healAmount: 30

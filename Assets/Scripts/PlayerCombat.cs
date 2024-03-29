@@ -33,6 +33,8 @@ public class PlayerCombat : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+
         _shieldParent.gameObject.SetActive(ShieldUp);
 
         if (_shieldCooldown > 0) {

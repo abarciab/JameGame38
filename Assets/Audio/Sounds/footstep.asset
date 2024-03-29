@@ -21,8 +21,8 @@ MonoBehaviour:
     pitch: 0
   type: 0
   SynchronizePitchAndVolume: 1
-  pitch: 0.915
-  volume: 0.1
+  pitch: 0.798
+  volume: 0.094
   unpauseable: 0
   randomizePitch: 1
   pitchRandomizeAmount: 0.062

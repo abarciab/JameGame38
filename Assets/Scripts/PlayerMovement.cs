@@ -2,6 +2,7 @@ using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, ReadOnly] public bool InDangerZone;
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _smokeParticles;
 
     private PlayerCombat _playerCombat;
     public bool movingRight { get; private set; }
@@ -138,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
+        if (Stunned) return false;
+
         bool grounded = false;
         var colliders = Physics2D.OverlapCircleAll(transform.position + (Vector3)_groundedOffset, _groundedRadius);
         foreach (var c in colliders) if (c.CompareTag("Ground")) grounded = true;
@@ -148,14 +152,42 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetToSafePosition()
     {
-        transform.position = _safePosition;
         _rb.velocity = Vector2.zero;
         _inputDir = Vector2.zero;
         Stunned = true;
-        Invoke(nameof(UnStun), 0.5f);
+        StartCoroutine(ResetPositionAfterWait());
     }
 
-    private void UnStun() => Stunned = false;
+    private IEnumerator ResetPositionAfterWait()
+    {
+        GetComponent<PlayerStats>().Invincible = true;
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        GetComponent<Collider2D>().enabled = false;
+        _animator.gameObject.SetActive(false);
+        _smokeParticles.Emit(350);
+        yield return new WaitForSeconds(.8f);
+
+        StartCoroutine(MoveSmooth(_safePosition, 0.2f));
+    }
+
+    private IEnumerator MoveSmooth(Vector3 pos, float time)
+    {
+        float timePassed = 0;
+        var startPos = transform.position;
+        while (timePassed < time) {
+            timePassed += Time.deltaTime;
+            var progress = timePassed / time;
+            transform.position = Vector3.Lerp(startPos, pos, progress);
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.position = _safePosition;
+        _animator.gameObject.SetActive(true);
+        GetComponent<Rigidbody2D>().isKinematic = false;
+        GetComponent<Collider2D>().enabled = true;
+        GetComponent<PlayerStats>().Invincible = false;
+        Stunned = false;
+    }
 
     private void OnDrawGizmosSelected()
     {

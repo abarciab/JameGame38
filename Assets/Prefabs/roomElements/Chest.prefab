@@ -204,9 +204,11 @@ MonoBehaviour:
   lootTable:
     entries:
     - item: {fileID: 11400000, guid: 775d82847bbd4d042a55d401bdfa9d8b, type: 2}
-      weight: 10
-    - item: {fileID: 11400000, guid: 57b397831c70b894db80f6aff08f27ca, type: 2}
-      weight: 0
+      weight: 5
+    - item: {fileID: 11400000, guid: 56440fed28bca3e45aa1c8a0b74a9a05, type: 2}
+      weight: 2.5
+    - item: {fileID: 11400000, guid: e357f02bc335e544991eb942b8e73d67, type: 2}
+      weight: 1
 --- !u!1 &6825550554773408804
 GameObject:
   m_ObjectHideFlags: 0

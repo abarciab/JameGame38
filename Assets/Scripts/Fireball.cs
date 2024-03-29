@@ -10,6 +10,7 @@ public class Fireball : MonoBehaviour
 {
     public bool Homing;
     public bool Bouncable;
+    [SerializeField] private bool _killOnBounce;
     public float Damage;
     private Transform _target;
     private Rigidbody2D _rb;
@@ -42,7 +43,7 @@ public class Fireball : MonoBehaviour
         if (_lifeTimeDeathOnly && _lifeTime <= 0) Kill();
 
         if (!Homing || !_target) return;
-        var dir = (Vector2)(_target.position - transform.position);
+        var dir = (Vector2)(( _target.position + Vector3.up * 2) - transform.position);
         float dist = dir.magnitude;
         if (dist < _homingStopRadius) {
             Homing = false;
@@ -65,7 +66,7 @@ public class Fireball : MonoBehaviour
             FindObjectOfType<CameraShake>().ShakeFixed();
             bounceData.OnBounced.Invoke();
 
-            if (!bounceData.enabled) {
+            if (!bounceData.enabled || _killOnBounce) {
                 Kill();
                 return;
             }

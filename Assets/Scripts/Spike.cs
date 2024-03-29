@@ -12,6 +12,9 @@ public class Spike : MonoBehaviour
     private float _damageCooldown;
     private PlayerCombat _player;
     [SerializeField] private Sound _deflectSound;
+    [SerializeField] private float _immuneTime = 0.6f;
+
+    [SerializeField] private float _immuneTimer;
 
     private void Start()
     {
@@ -35,11 +38,13 @@ public class Spike : MonoBehaviour
     {
         if (!player) return;
         if (Mathf.Abs(transform.localEulerAngles.y) < 0.1f && _player.BlockingDown) {
+            _immuneTimer = _immuneTime;
             FloorSpikeBlock();
             return;
         }
 
-        player.Damage(_damage);
+        if (_immuneTimer <= 0) player.Damage(_damage);
+
         if (_resetPlayer) _player.GetComponent<PlayerMovement>().ResetToSafePosition();
         _damageCooldown = _damagaTickTime;
     }
@@ -54,13 +59,17 @@ public class Spike : MonoBehaviour
     private void FloorSpikeBlock()
     {
         var rb = _player.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(rb.velocity.x * 1.1f, Mathf.Abs(rb.velocity.y) * 1.2f);
+        rb.velocity = new Vector2(rb.velocity.x * 1.1f, Mathf.Abs(rb.velocity.y) * 1.1f);
         _deflectSound.Play();
         _player.Deflect();
+
+        var spear = GetComponentInParent<SpearTrap>();
+        if (spear) spear.Retract();
     }
 
     private void Update()
     {
         _damageCooldown -= Time.deltaTime;
+        _immuneTimer -= Time.deltaTime;
     }
 }

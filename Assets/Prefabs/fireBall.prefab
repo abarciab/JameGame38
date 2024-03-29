@@ -253,11 +253,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Homing: 1
   Bouncable: 1
+  _killOnBounce: 0
   Damage: 10
-  _homingStopRadius: 5
-  _deflectSound: {fileID: 0}
+  _homingStopRadius: 2
+  _deflectSound: {fileID: 11400000, guid: 33e120a6f5722324485b7880f66d3339, type: 2}
   _trail: {fileID: 1758268409269059866}
   _deathTime: 5
+  _lifeTimeDeathOnly: 0
+  _lifeTime: 20
+  OnCollide:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!58 &315516752120988486
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -4222,7 +4222,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _item: {fileID: 0}
+  lootTable:
+    entries: []
 --- !u!4 &2016596001
 Transform:
   m_ObjectHideFlags: 0
@@ -38546,6 +38547,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1153818681695405339, guid: 95c554db81b529046bbdc9337bd2e94b, type: 3}
+      propertyPath: mainMusic
+      value: 
+      objectReference: {fileID: 11400000, guid: a7e56b25c94b9484e9ddaf8f79377185, type: 2}
     - target: {fileID: 6531226442189333687, guid: 95c554db81b529046bbdc9337bd2e94b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
